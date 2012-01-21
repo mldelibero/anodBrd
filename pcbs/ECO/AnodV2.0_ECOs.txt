@@ -1,0 +1,29 @@
+Changes to be made when ordering rest of boards
+-------------------------------------------------------
+Power Considerations
+-------------------------------------------------------
+Bypass capacitor on 12MHz oscillator										X
+10uF capacitor on 3.3V regulator input										X
+Use tantalum cap for output caps for 3.3V and -5V regulators for stability	Verify values
+
+-------------------------------------------------------
+ADC Considerations
+-------------------------------------------------------
+Must use 1.22V reference on negative inputs 
+	- This leaves only 6 ADC channels for each ADC
+	- ADCB pins 4-7 are occupied by JTAG, program must software disable JTAG during startup given a condition of a pin (switch/jumper to set mode) to use
+		- This functionality should be tested before depending on it for production
+	- Easiest to do 4V and 4I on each ADC due to virtual channel setup (4 channels/ADC)
+	---------------------------------------------------
+	WORK AROUND ON AnodV2.0 for ADC
+	---------------------------------------------------
+	- Pins 1 and 9 (ADCA3 and ADCB3) are also connected to 1.22 voltage reference
+	- Signals previously routed to these ADC inputs connected to pin 4 and 5, respectively  (previously unused ADC inputs)	
+	_ This centers the differential signal at 1.22V, so total input range is 1.22 - Vref to 1.22 + Vref
+-------------------------------------------------------
+Values
+-------------------------------------------------------
+Scaling resistors on output of instrumentation amp should be 3.83k and 330 to get within 0-2.44V ADC range	
+Feedback Resistors for Transimpedance amplifier should be 1, 1000, 1000000 to get better noise immunity
+Feedback capacitor for 1Meg resistor should be upped to ~.33uF for a single pole lowpass filter for aliasing prevention 
+Resistor values for gain and shift circuitry should be 294 --> 2940, 68.1 --> 442

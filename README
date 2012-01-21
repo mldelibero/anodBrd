@@ -1,0 +1,11 @@
+This repo houses all of the important resources for the anodization board research project. It is part of a larger project at Case Western Reserve University that is attempting to create ultra-high energy density capacitors.
+
+There have sofar been two main authors on this project:
+
+Steven Ehret:
+    Board design and layout
+Michael DeLibero:
+    Board validation and analysis
+    Firmware code
+    PC UI and data processing
+

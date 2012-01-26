@@ -1,0 +1,9 @@
+This code communicates to the Board via USB.
+
+It is responsible for:
+
+configuring test modes
+starting tests
+receiving and saving data during tests
+stopping tests
+

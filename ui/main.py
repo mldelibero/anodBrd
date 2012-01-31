@@ -7,7 +7,7 @@ from loop import *
 from postProcess import *
 
 
-init()
-loop()
-postProcess()
+if (init()):
+    loop()
+    postProcess()
 

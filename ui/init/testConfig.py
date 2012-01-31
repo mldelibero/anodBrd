@@ -1,9 +1,8 @@
 #! /usr/bin/env python
 '''
-This program loads the user data from the usr_info.xls file.
-The data must be in a specific format or the test will fail.
+This file contains everything needed to inspect the user's data file format in the init phase of the program.
 '''
-# grab the first sheet of the excel file.
+
 from xlrd import open_workbook
 from xlwt import Workbook
 from xlutils import *
@@ -34,18 +33,17 @@ data[8] = '0'
 
 vol_lim = 30    # V
 cur_lim = 100   # mA
-time_lim = 1440 # 24hrs
+time_lim = 1440 # min (24hrs)
 
 limits = {rheaders[3]:vol_lim,rheaders[4]:cur_lim,rheaders[5]:time_lim,rheaders[6]:vol_lim,rheaders[7]:cur_lim,rheaders[8]:time_lim}
 
-template_file = 'usr_info_template.xls'
-usr_file = 'usr_info.xls' # Must be based from template
+template_file = 'testConfig_template.xls'
+testConfig_file = 'testConfig.xls' # Must be based from template
 
-#function to creat an excel file of approp format
-#warning! this will overwrite your Current file
 def create_template(file):
+    """ Creat a template .xls file for the test's data output."""
     book = Workbook()
-    sheet1 = book.add_sheet('usr_info')
+    sheet1 = book.add_sheet('test_info')
 
     for i in range(len(rheaders)):
         sheet1.write(i,0,rheaders[i])
@@ -54,37 +52,62 @@ def create_template(file):
     book.save(file)
     book.save(TemporaryFile())
 
-#function to check if the file matches the template
 def matches_template(file):
+    """Check to see if the test Configuration file matches the template:"""
+    print "Checking for '%s' -> '%s' compatability" % (testConfig_file,template_file)
+    #Test to see if the the testConfig_file exists
+    try:
+        open(file)
+    except IOError as e:
+        print "Error: File %s does not exist!" % file
+        print "Rename '%s' to '%s' and fill in your desired test data." % (template_file,testConfig_file)
+        return False
+
+    #Test to see if the testConfig_file matches the template
     allGood = True
     book = open_workbook(file)
     sheet = book.sheet_by_index(0)
     names = sheet.col_values(0,0,len(rheaders));
 
     for i in range(len(rheaders)):
-        print "%s   ==  %s   --- " % (names[i],rheaders[i]),
-        test = names[i] == rheaders[i]
-        print test
-        if (test == False):
-            allGood = test
+        if (names[i] != rheaders[i]):
+            print "%s   !=  %s" % (names[i],rheaders[i])
+            allGood = False
           
-    return allGood        
+    if (allGood == True):
+        print "Files are compatable\n"
 
-#function checks limits on user's requested settings
+    return (allGood)    
+    
 def check_usr_limits(file):
+    """\nCheck to see if the test's limits are below the maximums:\n"""
+    
+    print "Testing if test parameters are below maximums:\n"
+
     allGood = True
     book = open_workbook(file)
     sheet = book.sheet_by_index(0)
     usr_val= sheet.col_values(1,0,len(rheaders));
     k = sorted(limits.keys())
+ 
+    print "special\n"
+    print "heee"
+    print "special\n"
 
     for i in range(3,len(usr_val)):
-        test = usr_val[i] <= limits[k[i-3]]
-        allGood = allGood & test
-        print "User %s: %s  <=  Limit: %s --- %s" % (k[i-3],usr_val[i],limits[k[i-3]],test)
+        if (usr_val[i] > limits[k[i-3]]):
+            allGood = False
+            print "User %s: %s  <=  Limit: %s" % (k[i-3],usr_val[i],limits[k[i-3]])
 
     return allGood
 
-create_template(template_file)
-print "all tests: %s " % matches_template(usr_file)
-print "All Tests: {0} ".format(check_usr_limits(usr_file))
+def checkUsr():
+    """Check that the test configuration file is properly formatted with sensible parameters."""
+
+    create_template(template_file)#OverWr old templates is desired
+    if (matches_template(testConfig_file)):
+        check_usr_limits(testConfig_file)
+    else:
+        print "Error: Initialization Failed!"
+        return False
+    

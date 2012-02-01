@@ -45,10 +45,6 @@ def create_template(file):
     book = Workbook()
     sheet1 = book.add_sheet('test_info')
 
-    print "creating template\n"
-    for i in range(len(data)):
-        print type(data[i])
-
     for i in range(len(rheaders)):
         sheet1.write(i,0,rheaders[i])
         sheet1.write(i,1,data[i])
@@ -84,9 +80,9 @@ def matches_template(file):
     return (allGood)    
     
 def check_usr_limits(file):
-    """\nCheck to see if the test's limits are below the maximums:\n"""
+    """Check to see if the test's limits are below the maximums:"""
     
-    print "Testing if test parameters are below maximums:\n"
+    print "Testing if test parameters are below maximums:"
 
     allGood = True
     book = open_workbook(file)
@@ -95,9 +91,15 @@ def check_usr_limits(file):
     r_val = sheet.col_values(0,0,len(rheaders));
     k = sorted(limits.keys())
 
-    for row in range(0,len(rheaders)):
-        print usr_val[row],type(usr_val[row])
-    return allGood
+    for row in range(3,len(rheaders)):
+        if (usr_val[row] > limits[r_val[row]]):
+            print "%s : %i !< limit of %i" % (r_val[row],usr_val[row],limits[r_val[row]])
+            allGood = False
+    if (allGood == True):
+        print "Parameters are below maximums"
+        return allGood
+    else:
+        return False
 
 def checkUsr():
     """Check that the test configuration file is properly formatted with sensible parameters."""

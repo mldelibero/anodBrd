@@ -13,23 +13,23 @@ rheaders = (['','','','','','','','','',])
 rheaders[0] = 'User Name'
 rheaders[1] = 'Anod Material'
 rheaders[2] = 'Electrolyte'
-rheaders[3] = 'Ch1 Cur (mA)'
-rheaders[4] = 'Ch1 Time (min)'
-rheaders[5] = 'Ch1 Vol (V)'
-rheaders[6] = 'Ch2 Cur (mA)'
-rheaders[7] = 'Ch2 Time (min)'
-rheaders[8] = 'Ch2 Vol (V)'
+rheaders[3] = 'Ch1 Vol (V)'
+rheaders[4] = 'Ch1 Cur (mA)'
+rheaders[5] = 'Ch1 Time (min)'
+rheaders[6] = 'Ch2 Vol (V)'
+rheaders[7] = 'Ch2 Cur (mA)'
+rheaders[8] = 'Ch2 Time (min)'
 #Initialize sample data
 data = (['','','','','','','','','',])
 data[0] = 'Michael DeLibero'
 data[1] = 'Titanium'
 data[2] = 'H3PO4'
 data[3] = '0'
-data[4] = '0'
-data[5] = '0'
-data[6] = '0'
-data[7] = '0'
-data[8] = '0'
+data[4] = '1'
+data[5] = '2'
+data[6] = '3'
+data[7] = '4'
+data[8] = '5'
 
 vol_lim = 30    # V
 cur_lim = 100   # mA
@@ -88,17 +88,11 @@ def check_usr_limits(file):
     book = open_workbook(file)
     sheet = book.sheet_by_index(0)
     usr_val= sheet.col_values(1,0,len(rheaders));
+    r_val = sheet.col_values(0,0,len(rheaders));
     k = sorted(limits.keys())
- 
-    print "special\n"
-    print "heee"
-    print "special\n"
 
-    for i in range(3,len(usr_val)):
-        if (usr_val[i] > limits[k[i-3]]):
-            allGood = False
-            print "User %s: %s  <=  Limit: %s" % (k[i-3],usr_val[i],limits[k[i-3]])
-
+    for row in range(0,len(rheaders)):
+        print usr_val[row],type(usr_val[row])
     return allGood
 
 def checkUsr():

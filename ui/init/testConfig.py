@@ -24,12 +24,12 @@ data = (['','','','','','','','','',])
 data[0] = 'Michael DeLibero'
 data[1] = 'Titanium'
 data[2] = 'H3PO4'
-data[3] = '0'
-data[4] = '1'
-data[5] = '2'
-data[6] = '3'
-data[7] = '4'
-data[8] = '5'
+data[3] = 0
+data[4] = 1
+data[5] = 2
+data[6] = 3
+data[7] = 4
+data[8] = 5
 
 vol_lim = 30    # V
 cur_lim = 100   # mA
@@ -44,6 +44,10 @@ def create_template(file):
     """ Creat a template .xls file for the test's data output."""
     book = Workbook()
     sheet1 = book.add_sheet('test_info')
+
+    print "creating template\n"
+    for i in range(len(data)):
+        print type(data[i])
 
     for i in range(len(rheaders)):
         sheet1.write(i,0,rheaders[i])

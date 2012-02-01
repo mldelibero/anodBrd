@@ -38,11 +38,12 @@ time_lim = 1440 # min (24hrs)
 
 limits = {testParam_name[3]:vol_lim,testParam_name[4]:cur_lim,testParam_name[5]:time_lim,testParam_name[6]:vol_lim,testParam_name[7]:cur_lim,testParam_name[8]:time_lim}
 
-template_file = 'testConfig_template.xls'
-testConfig_file = 'testConfig.xls' # Must be based from template
-
 #Initialize state variable
 state = {testParam_name[3]:0,testParam_name[4]:1,testParam_name[5]:2,testParam_name[6]:3,testParam_name[7]:4,testParam_name[8]:5,'ch1_state':6,'ch2_state':7}
+
+
+template_file = 'testConfig_template.xls'
+testConfig_file = 'testConfig.xls' # Must be based from template
 
 def create_template(file):
     """ Creat a template .xls file for the test's testParam_val output."""

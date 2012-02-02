@@ -8,14 +8,18 @@ def init():
     """
     print "\n//---------------------------------------"
     print "Starting Initialization"
-    print "//---------------------------------------"
+    print "//---------------------------------------\n"
+    
     print "Checking User/Test configurations:\n"
 
     if  checkUsr():
         print "\n//---------------------------------------"
         print "Initialization Sucessful"
+        print "//---------------------------------------"
+        return True
     else:
         print "Error: Initialization Failed!"
+        return False
     print "//---------------------------------------"
     
 

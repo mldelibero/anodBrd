@@ -1,4 +1,7 @@
 #! /usr/bin/env python
 
 def postProcess():
-    print "post process"
+    """Process all the data taken during the test."""
+    print "\n//---------------------------------------"
+    print "Starting Post Processing of data"
+    print "//---------------------------------------"

@@ -139,19 +139,21 @@ def initState(file):
     sheet = book.sheet_by_index(0)
     usr_val = sheet.col_values(1,0,len(order))
     usr_val_name = sheet.col_values(0,0,len(order))
+    usr_dic = dict(zip(usr_val_name,usr_val))
+
 
     for key in usr_val_name:
         try:
-            print state[key]
-        except None:
-            print "%s not in state" % (key)
+            state[key] = usr_dic[key]
+        except KeyError:
+            pass #Key is not in the state
 
 def checkUsr():
     """Check that the test configuration file is properly formatted with sensible parameters."""
 
     create_template(template_file)#OverWr old templates is desired
 #    if (matches_template(testConfig_file) and check_usr_limits(testConfig_file) and confirm_testParameters(testConfig_file)):
-    if (matches_template(testConfig_file) and check_usr_limits(testConfig_file):
+    if (matches_template(testConfig_file) and check_usr_limits(testConfig_file)):
         initState(testConfig_file)
         return True
     else:

@@ -28,6 +28,7 @@ def loop():
     print "//---------------------------------------"
 
 def chkTime():
+    """Check the time and end test if the are past their time limits."""
     print "time"
 def getData():
     print "getting Data"

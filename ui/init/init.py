@@ -11,7 +11,11 @@ def init():
     print "//---------------------------------------"
     print "Checking User/Test configurations:\n"
 
-    checkUsr()
+    if  checkUsr():
+        print "\n//---------------------------------------"
+        print "Initialization Sucessful"
+    else:
+        print "Error: Initialization Failed!"
     print "//---------------------------------------"
     
 

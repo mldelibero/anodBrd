@@ -137,7 +137,7 @@ def checkUsr():
 
     create_template(template_file)#OverWr old templates is desired
     if (matches_template(testConfig_file) and check_usr_limits(testConfig_file) and confirm_testParameters(testConfig_file)):
-        print "Initialization Sucessful\n"
+        return True
     else:
-        print "Error: Initialization Failed!"
         return False
+

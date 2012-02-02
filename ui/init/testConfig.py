@@ -114,14 +114,22 @@ def confirm_testParameters(file):
     usr_val_name = sheet.col_values(0,0,len(order))
 
     for row in range(len(usr_val)):
-        
-        
+        print "%s = %s" % (usr_val_name[row],usr_val[row])
+    
+    
+    valid = False
+    while (valid == False):
+        ans = raw_input('\n(y/n)\n')
 
-    print state
-    for key in state.keys():
-       print key 
-       print state[key]
-       # print "%s = %i" % (key,state[key])
+        if ((ans == 'y') or (ans == 'Y')):
+            valid = True
+        elif ((ans == 'n') or (ans == 'N')):
+            print "Fix your parameters in %s and run this script again." % (template_file)
+            valid = True
+            return False
+        else:
+            print "Invalid Answer"
+
     return True
 
 def checkUsr():

@@ -7,9 +7,13 @@ sys.path.append('./postProc')
 from init import *
 from loop import *
 from postProcess import *
+from testConfig import state_t
 
 #Run the rest of the program if the initialization is sucessful.
-if (init()):
-    loop()
+state = state_t
+state = init(state)
+
+if (state != False):
+    loop(state)
     postProcess()
 

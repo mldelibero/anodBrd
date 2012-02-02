@@ -13,6 +13,7 @@ from datetime import *
 #Initialize testParam_name
 date = datetime.now().strftime("%Y-%m-%d")
 
+
 usrName = 'User Name'
 testDate = 'Test Date'
 anodMat = 'Anod Material'
@@ -21,10 +22,24 @@ ch1_vol = 'Ch1 Vol(V)'
 ch2_vol = 'Ch2 Vol(V)'
 ch1_cur = 'Ch1 Cur(mA)'
 ch2_cur = 'Ch2 Cur(mA)'
-ch1_time = 'Ch1 Time'
-ch2_time = 'Ch2 Time'
+ch1_time = 'Ch1 Time (min)'
+ch2_time = 'Ch2 Time (min)'
 
-testParam = {usrName:'Michael DeLibero',testDate:date,anodMat:'Titanium',elecro:'H3PO4',ch1_vol:0,ch1_cur:1,ch1_time:2,ch2_vol:3,ch2_cur:4,ch2_time:5}
+#Put all of the names in a named tuple to be included in other files
+names = namedtuple('names_ntup',['usrName','testDate','anodMat','elecro','ch1_vol','ch1_cur','ch1_time','ch2_vol','ch2_cur','ch2_time'])
+
+names.usrName = usrName
+names.testDate = testDate
+names.anodMat = anodMat
+names.elecro = elecro
+names.ch1_vol = ch1_vol
+names.ch1_cur = ch1_cur
+names.ch1_time = ch1_time
+names.ch2_vol = ch2_vol
+names.ch2_cur = ch2_cur
+names.ch2_time = ch2_time
+
+testParam = {usrName:'Your Name',testDate:date,anodMat:'Titanium',elecro:'H3PO4',ch1_vol:0,ch1_cur:1,ch1_time:2,ch2_vol:3,ch2_cur:4,ch2_time:5}
 
 vol_lim = 30    # V
 cur_lim = 100   # mA
@@ -33,8 +48,10 @@ time_lim = 1440 # min (24hrs)
 limits = {ch1_vol:vol_lim,ch1_cur:cur_lim,ch1_time:time_lim,ch2_vol:vol_lim,ch2_cur:cur_lim,ch2_time:time_lim}
 order = [usrName,testDate,anodMat,elecro,ch1_vol,ch1_cur,ch1_time,ch2_vol,ch2_cur,ch2_time]
 
-#Initialize state variable
-state = {ch1_vol:0,ch1_cur:1,ch1_time:2,ch2_vol:3,ch2_cur:4,ch2_time:5}
+#Initialize state factory class
+state_nt_t = namedtuple('state_nt_t',['usrName','testDate','anodMat','elecro','ch1_vol','ch1_cur','ch1_time','ch2_vol','ch2_cur','ch2_time'])
+#state type to be copied into main and the passed to functions
+state_t = state_nt_t(0,0,0,0,0,0,0,0,0,0)
 
 template_file = 'testConfig_template.xls'
 testConfig_file = 'testConfig.xls' # Must be based from template
@@ -68,11 +85,11 @@ def matches_template(file):
     allGood = True
     book = open_workbook(file)
     sheet = book.sheet_by_index(0)
-    names = sheet.col_values(0,0,len(testParam));
+    usr_val_name = sheet.col_values(0,0,len(testParam));
 
     for row in range(len(order)):
-        if(names[row] != order[row]):
-            print "%s   !=  %s" % (names[row],order[row])
+        if(usr_val_name[row] != order[row]):
+            print "%s   !=  %s" % (usr_val_name[row],order[row])
             allGood = False
           
     if (allGood == True):
@@ -132,30 +149,37 @@ def confirm_testParameters(file):
 
     return True
 
-def initState(file):
-    """Initilize the state variable"""
-    
+def initState(file,state_inSt):
+    """ Initilize the state variable.
+
+        state_inSt is the state variable as it exists in the initState fun
+    """
+
     book = open_workbook(file)
     sheet = book.sheet_by_index(0)
     usr_val = sheet.col_values(1,0,len(order))
     usr_val_name = sheet.col_values(0,0,len(order))
     usr_dic = dict(zip(usr_val_name,usr_val))
 
+    print usr_dic[ch1_vol]
+    print type(usr_dic[ch1_vol])
+    print type(state_inSt.ch1_vol)
 
-    for key in usr_val_name:
-        try:
-            state[key] = usr_dic[key]
-        except KeyError:
-            pass #Key is not in the state
+    state_inSt = state_inSt._replace(ch1_vol=10)
 
-def checkUsr():
-    """Check that the test configuration file is properly formatted with sensible parameters."""
+    print state_inSt
+    return state_inSt
+
+def checkUsr(state_checkUsr):
+    """Check that the test configuration file is properly formatted with sensible parameters.
+        state_checkUsr is the state variable as it exists in the checkUsr fun.
+    """
 
     create_template(template_file)#OverWr old templates is desired
 #    if (matches_template(testConfig_file) and check_usr_limits(testConfig_file) and confirm_testParameters(testConfig_file)):
     if (matches_template(testConfig_file) and check_usr_limits(testConfig_file)):
-        initState(testConfig_file)
-        return True
+        state_checkUsr = initState(testConfig_file,state_checkUsr)
+        return state_checkUsr
     else:
         return False
 

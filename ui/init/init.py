@@ -1,10 +1,10 @@
 #! /usr/bin/env python
 from testConfig import *
 
-def init():
+def init(state_init):
     """ Initialize program files before running loop.py.
         
-        1. Check usr/test info file for existance and formatting.    
+        state_init -- The state variable as it exists in the init fun
     """
     print "\n//---------------------------------------"
     print "Starting Initialization"
@@ -12,11 +12,13 @@ def init():
     
     print "Checking User/Test configurations:\n"
 
-    if  checkUsr():
+    state_init = checkUsr(state_init)
+
+    if(state_init != False):
         print "\n//---------------------------------------"
         print "Initialization Sucessful"
         print "//---------------------------------------"
-        return True
+        return state_init
     else:
         print "Error: Initialization Failed!"
         return False

@@ -13,45 +13,23 @@ from datetime import *
 #Initialize testParam_name
 date = datetime.now().strftime("%Y-%m-%d")
 
-
-usrName = 'User Name'
-testDate = 'Test Date'
-anodMat = 'Anod Material'
-elecro = 'Elecrolyte'
-ch1_vol = 'Ch1 Vol(V)'
-ch2_vol = 'Ch2 Vol(V)'
-ch1_cur = 'Ch1 Cur(mA)'
-ch2_cur = 'Ch2 Cur(mA)'
-ch1_time = 'Ch1 Time (min)'
-ch2_time = 'Ch2 Time (min)'
-
-#Put all of the names in a named tuple to be included in other files
-names = namedtuple('names_ntup',['usrName','testDate','anodMat','elecro','ch1_vol','ch1_cur','ch1_time','ch2_vol','ch2_cur','ch2_time'])
-
-names.usrName = usrName
-names.testDate = testDate
-names.anodMat = anodMat
-names.elecro = elecro
-names.ch1_vol = ch1_vol
-names.ch1_cur = ch1_cur
-names.ch1_time = ch1_time
-names.ch2_vol = ch2_vol
-names.ch2_cur = ch2_cur
-names.ch2_time = ch2_time
-
-testParam = {usrName:'Your Name',testDate:date,anodMat:'Titanium',elecro:'H3PO4',ch1_vol:0,ch1_cur:1,ch1_time:2,ch2_vol:3,ch2_cur:4,ch2_time:5}
-
 vol_lim = 30    # V
 cur_lim = 100   # mA
 time_lim = 1440 # min (24hrs)
+no_lim = 0
 
-limits = {ch1_vol:vol_lim,ch1_cur:cur_lim,ch1_time:time_lim,ch2_vol:vol_lim,ch2_cur:cur_lim,ch2_time:time_lim}
-order = [usrName,testDate,anodMat,elecro,ch1_vol,ch1_cur,ch1_time,ch2_vol,ch2_cur,ch2_time]
-
-#Initialize state factory class
-state_nt_t = namedtuple('state_nt_t',['usrName','testDate','anodMat','elecro','ch1_vol','ch1_cur','ch1_time','ch2_vol','ch2_cur','ch2_time'])
-#state type to be copied into main and the passed to functions
-state_t = state_nt_t(0,0,0,0,0,0,0,0,0,0)
+#state.val = (excel name,value,excel order,limit
+state = {'usrName':['User Name','Your Name',0,no_lim],
+         'testDate':['Test Date',date,1,no_lim],
+         'anodMat':['Anod Material','Titanium',2,no_lim],
+         'elecro':['Electrolye','H3PO4',3,no_lim],
+         'ch1_vol':['Ch1 Vol(V)',0,4,vol_lim],
+         'ch1_cur':['Ch1 Cur(mA)',1,5,cur_lim],
+         'ch1_time':['Ch1 Time(min)',2,6,time_lim],
+         'ch2_vol':['Ch2 Vol(V)',3,7,vol_lim],
+         'ch2_cur':['Ch2 Cur(mA)',4,8,cur_lim],
+         'ch2_time':['Ch2 Time(min)',2,9,time_lim],
+         }
 
 template_file = 'testConfig_template.xls'
 testConfig_file = 'testConfig.xls' # Must be based from template
@@ -165,7 +143,7 @@ def initState(file,state_inSt):
     print type(usr_dic[ch1_vol])
     print type(state_inSt.ch1_vol)
 
-    state_inSt = state_inSt._replace(ch1_vol=10)
+    #state_inSt = state_inSt._replace(ch1_vol=usr_dic[ch1_vol],ch1_cur = usr_dic[ch1_cur],ch1_time = usr_dic[ch1_time],ch2_vol = usr_dic[ch2_vol],ch2_time = usr_dic[)
 
     print state_inSt
     return state_inSt

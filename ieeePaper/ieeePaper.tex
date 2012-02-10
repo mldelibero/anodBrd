@@ -110,7 +110,7 @@ This hydrogen reacts with the electrons at the cathode to create hydrogen gas an
 
 This process is very similar to anodizing aluminum. For an explanation of that process visit (---quote Case encyclopedia). 
 
-Since the rate of oxide formation is dependent on the charge transport into the anode during anodization, a current source was selected. A typical anodization process with a current source will see the current and voltage progress as in (~\ref{currentMirror})
+Since the rate of oxide formation is dependent on the charge transport into the anode during anodization, a current source was selected. A typical anodization process with a current source will see the current and voltage progress as in (~\ref{fig:currentMirror})
  
 
 \begin{figure}[here]
@@ -152,7 +152,8 @@ An ideal current source has the ability to output a constant, DC, current to any
 \label{fig:currentMirror}
 \end{figure}
 
-The current source implementation (~\ref{currentMirror}) was chosen around an op-amp based current mirror. The op-amp on the left, U4Z1C, is used to set and regulate the current through R23. This current functions as the reference current on the left leg of the current mirror. The op-amp on the right, U4Z1B, forces the voltage drop across R17 and R18 to be the same, hence causing the current in the right leg to go as:
+
+The current source implementation (fig:~\ref{fig:currentMirror}) was chosen around an op-amp based current mirror. The op-amp on the left, U4Z1C, is used to set and regulate the current through R23. This current functions as the reference current on the left leg of the current mirror. The op-amp on the right, U4Z1B, forces the voltage drop across R17 and R18 to be the same, hence causing the current in the right leg to go as:
 
 \begin{equation}
 I2 = I1*R18/R17
@@ -170,15 +171,15 @@ The real current source has several practical limitations that provide less than
 \label{fig:safeOpArea}
 \end{figure}
 
-The safe operating area (fig: ~\ref{fig:safeOpArea}) is smaller than the desired operating output of 30V at 100mA. This difference comes from the limitations in the power dissipation of the pass transistor, U18Z1, in Fig. 2. Assuming the worse case scenario of a short on the output, the allowable output current for a given voltage compliance can be found as:
+The safe operating area (fig: ~\ref{fig:safeOpArea}) is smaller than the desired operating output of 30V at 100mA. This difference comes from the limitations in the power dissipation of the pass transistor, U18Z1, in fig:~\ref{fig:currentMirror}. Assuming the worse case scenario of a short on the output, the allowable output current for a given voltage compliance can be found as:
 
 \begin{equation}
 Iout = Prating / Vcomp
 \end{equation}
 
-The current source operates by controlling the gate voltage of U18Z1 in F2ig 2 to ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of (fig:~\ref{currentMirror}) is limited by the Gain Bandwidth Product of U4X1B (1.8Mhz – reference datasheet). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
+The current source operates by controlling the gate voltage of U18Z1 in fig:~\ref{fig:currentMirror}) ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of (fig:~\ref{fig:currentMirror}) is limited by the Gain Bandwidth Product of U4X1B (1.8Mhz – reference datasheet). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
 
-The ideal current source has the ability to output any desired current over its range with infinite precision. The current source in this design is limited in this regard by the discretization error of setting the current. Referring to (fig:~\ref{currentMirror}) the signal i set4 is used as a control signal to set the reference current in the device. This signal is controlled by a Microchip MCP4812 10-bit DAC. A first approximation of the discretization uncertainty in selecting DAC outputs can be found by:
+The ideal current source has the ability to output any desired current over its range with infinite precision. The current source in this design is limited in this regard by the discretization error of setting the current. Referring to (fig:~\ref{fig:currentMirror}) the signal i set4 is used as a control signal to set the reference current in the device. This signal is controlled by a Microchip MCP4812 10-bit DAC. A first approximation of the discretization uncertainty in selecting DAC outputs can be found by:
 
 
 \begin{equation}
@@ -187,11 +188,11 @@ U = Vi_set /(2n-1) / (R23 + Rpot) *(R18/R17)
 
 Which yields an uncertainty in the current output of +/- 0.5mA. This can be calibrated away for a single current output, but all other outputs would be off by as much as the uncertainty.
 
-Also, the protection diode, U39, in (fig:~\ref{currentMirror}) has the effect of increasing the voltage compliance as the current drops off after anodization. Looking at a standard diode curve, the voltage drop across the diode is roughly a constant 0.7V for high currents and exponentially diminishes towards zero as the current decreases. The tests are designed to not only anodize, but also continue to measure the long-term leakage current afterwards. This means that the current draw will decrease to the nA range, causing the effective voltage compliance to increase to about a diode drop above its anodization level. This affect will need to be considered during the analysis of the anodization data.
+Also, the protection diode, U39, in (fig:~\ref{fig:currentMirror}) has the effect of increasing the voltage compliance as the current drops off after anodization. Looking at a standard diode curve, the voltage drop across the diode is roughly a constant 0.7V for high currents and exponentially diminishes towards zero as the current decreases. The tests are designed to not only anodize, but also continue to measure the long-term leakage current afterwards. This means that the current draw will decrease to the nA range, causing the effective voltage compliance to increase to about a diode drop above its anodization level. This affect will need to be considered during the analysis of the anodization data.
 
 -----------------Add Sections on Accuracy, Precision, and Repeatability. 
 
-DUT
+\subsection{DUT}
 
 The device under test was typically meant to be a titanium anode to be anodized or a titanium capacitor. The device is able to operate with resistive loads and any capacitive loads (with capacitance large enough for the system to be able to respond.
 
@@ -200,14 +201,22 @@ Current and Voltage Measurements
 
 The second part of the instrumentation is the measurement circuitry. An ideal measurement system would have no error or time delay when measuring the signal. It would also be able to perfectly reconstruct the signal for post analysis. 
  
-Figure 6: Measurement Circuitry
-The measurement circuitry, Fig 4, implemented consists of two different parts, voltage and current measurements. The voltage of the DUT is measured differentially by Analog Device’s AD8220 JFET instrumentation amplifier. This output is scaled and then sent to a 12-bit DAC. The current through the DUT is measure from a low side measurement topology know and a transimpedance amplifier. The amplifier creates a virtual ground at the negative terminal of the op-amp,U39, that allows for a current reading without subjecting the measurement circuitry to a high voltage and without floating the bottom of the DUT above ground.
+
+\begin{figure}[here]
+\centering
+\includegraphics[width=2.5in]{measCir}
+\caption{Measurement Circuitry}
+\label{fig:measCir}
+\end{figure}
+
+The measurement circuitry (fig:~\ref{measCir}) implemented consists of two different parts, voltage and current measurements. The voltage of the DUT is measured differentially by Analog Device’s AD8220 JFET instrumentation amplifier. This output is scaled and then sent to a 12-bit DAC. The current through the DUT is measure from a low side measurement topology know and a transimpedance amplifier. The amplifier creates a virtual ground at the negative terminal of the op-amp,U39, that allows for a current reading without subjecting the measurement circuitry to a high voltage and without floating the bottom of the DUT above ground.
 
 Since it is desirable the measure both the anodization current and the leakage current afterwards, a basic transimpedance amplifier design was modified to include 3 switched feedback paths. This allows the current measurement to measure currents over 8 orders of magnitude. The circuitry can handle currents from 10nA to 100mA.
 
 The real measurement circuitry has several practical limitations that limit it from performing ideally. Both the differential amplifier and the transimpedance amplifier send their signals to 6-pole Sallen-Key filters. These filters have a cutoff frequency of 10kHz(quote S. thesis), in order to filter out high frequency harmonics and other undesirable noise. Any signals higher than this will be severely attenuated in the captured data.
 
 The DACs inject digitization errors into the measurement signals. They are able to measure signals with resolutions shown in Table 1.
+
 
 Table 1: DAC resolution
 ResolutionFull scale measurementComment

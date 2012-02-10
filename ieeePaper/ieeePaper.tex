@@ -52,29 +52,13 @@
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 \begin{document}
-%
-% paper title
-% can use linebreaks \\ within to get better formatting as desired
-\title{Bare Demo of IEEEtran.cls for Journals}
-%
-%
-% author names and IEEE memberships
-% note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
-% a structure at a ~ so this keeps an author's name from being broken across
-% two lines.
-% use \thanks{} to gain access to the first footnote area
-% a separate \thanks must be used for each paragraph as LaTeX2e's \thanks
-% was not built to handle multiple paragraphs
-%
 
-\author{Michael~Shell,~\IEEEmembership{Member,~IEEE,}
-        John~Doe,~\IEEEmembership{Fellow,~OSA,}
-        and~Jane~Doe,~\IEEEmembership{Life~Fellow,~IEEE}% <-this % stops a space
-\thanks{M. Shell is with the Department
-of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta,
-GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this % stops a space
-\thanks{J. Doe and J. Doe are with Anonymous University.}% <-this % stops a space
-\thanks{Manuscript received April 19, 2005; revised January 11, 2007.}}
+\title{Instrumentation For The Anodization and Characterization of Titanium Electrodes for Electrolytic Capacitors}
+
+\author{Michael~DeLibero,~\IEEEmembership{Member,~IEEE,}% <- This stops a space
+\thanks{M. DeLibero is a MS student at Case Western Reserve University with the Department
+of Electrical and Computer Engineering}%
+\thanks{Special Thanks give to ARPA-E,Dr. Merat, Steven Ehret}}
 
 % note the % following the last \IEEEmembership and also \thanks - 
 % these prevent an unwanted space from occurring between the last author name
@@ -146,34 +130,41 @@ IEEEtran, journal, \LaTeX, paper, template.
 
 \subsection{Anodization Process and Requirements}
 
-Anodization is the act of growing an oxide layer on top of a metal anode. This is useful in capacitors because it allows a capacitor to store significantly more energy then it would have otherwise. The anodization process is preformed by immersing an anode and a cathode into an electrolyte solution and then hooking up either a voltage or current source across the sample. This process can be seen in fig1:
+Anodization is the act of growing an oxide layer on top of a metal anode. This is useful in capacitors because it allows a capacitor to store significantly more energy then it would have otherwise. The anodization process is preformed by immersing an anode and a cathode into an electrolyte solution and then hooking up either a voltage or current source across the sample. This process can be seen in Fig:  ~\ref{fig:anodSetup}
 
-\begin{figure}[!t]
+\begin{figure}[here]
 \centering
 \includegraphics{anodSetup}
 \caption{Anodization Setup}
-\label{fig_sim}
+\label{fig:anodSetup}
 \end{figure}
 
-Figure 1: Anodization setup
 
-Referring to Fig1, in the simplest case, the current transfer is an ionic transfer where the Ti anode reacts with O2 to create a TiO2 oxide layer. The reaction at the metal-oxide surface can be written as:
+Referring to Fig:~\ref{fig:anodSetup}, in the simplest case, the current transfer is an ionic transfer where the Ti anode reacts with O2 to create a TiO2 oxide layer. The reaction at the metal-oxide surface can be written as:
 
-Ti + 02 => TiO2 + 4e(equ. 1)
-
+\begin{equation}
+Ti + 02 => TiO2 + 4e
+\end{equation}
 The titanium also reacts with the electrolyte solution to give off hydrogen:
-
-Ti + 2H20 => Ti02 + 4H+Ti02(equ 2)
-
+\begin{equation}
+Ti + 2H20 => Ti02 + 4H+Ti02
+\end{equation}
 This hydrogen reacts with the electrons at the cathode to create hydrogen gas and complete the ionic circuit.
-
-4H + 4e => 2H20(equ 3)
-
+\begin{equation}
+4H + 4e => 2H20
+\end{equation}
 
 This process is very similar to anodizing aluminum. For an explanation of that process visit (---quote Case encyclopedia). 
 
 Since the rate of oxide formation is dependent on the charge transport into the anode during anodization, a current source was selected. A typical anodization process with a current source will see the current and voltage progress as in Fig2
  
+
+\begin{figure}[here]
+\centering
+\includegraphics{anodCurve}
+\caption{Anodization Curve}
+\label{fig:anodCurve}
+\end{figure}
 Figure 2: Anodization by a Constant Current – quote microminiturization
 
 If a constant current is introduced, the voltage will (ideally) rise linearly with time. This will happen until the DUT reaches the compliance voltage, at which point the current through the DUT will begin to drop off until it reaches the leakage current of the unpackaged capacitor. 

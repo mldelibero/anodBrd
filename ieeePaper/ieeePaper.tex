@@ -1,4 +1,4 @@
-\documentclass[journal]{./IEEEtran}
+\documentclass[journal]{IEEEtran}
 
 \usepackage{cite}
 % The latest version can be obtained at:
@@ -197,7 +197,7 @@ Also, the protection diode, U39, in (fig:~\ref{fig:currentMirror}) has the effec
 The device under test was typically meant to be a titanium anode to be anodized or a titanium capacitor. The device is able to operate with resistive loads and any capacitive loads (with capacitance large enough for the system to be able to respond.
 
 
-Current and Voltage Measurements
+\subsection{Current and Voltage Measurements}
 
 The second part of the instrumentation is the measurement circuitry. An ideal measurement system would have no error or time delay when measuring the signal. It would also be able to perfectly reconstruct the signal for post analysis. 
  
@@ -209,44 +209,62 @@ The second part of the instrumentation is the measurement circuitry. An ideal me
 \label{fig:measCir}
 \end{figure}
 
-The measurement circuitry (fig:~\ref{measCir}) implemented consists of two different parts, voltage and current measurements. The voltage of the DUT is measured differentially by Analog Device’s AD8220 JFET instrumentation amplifier. This output is scaled and then sent to a 12-bit DAC. The current through the DUT is measure from a low side measurement topology know and a transimpedance amplifier. The amplifier creates a virtual ground at the negative terminal of the op-amp,U39, that allows for a current reading without subjecting the measurement circuitry to a high voltage and without floating the bottom of the DUT above ground.
+The measurement circuitry (fig:~\ref{fig:measCir}) implemented consists of two different parts, voltage and current measurements. The voltage of the DUT is measured differentially by Analog Device’s AD8220 JFET instrumentation amplifier. This output is scaled and then sent to a 12-bit DAC. The current through the DUT is measure from a low side measurement topology know and a transimpedance amplifier. The amplifier creates a virtual ground at the negative terminal of the op-amp,U39, that allows for a current reading without subjecting the measurement circuitry to a high voltage and without floating the bottom of the DUT above ground.
 
 Since it is desirable the measure both the anodization current and the leakage current afterwards, a basic transimpedance amplifier design was modified to include 3 switched feedback paths. This allows the current measurement to measure currents over 8 orders of magnitude. The circuitry can handle currents from 10nA to 100mA.
 
 The real measurement circuitry has several practical limitations that limit it from performing ideally. Both the differential amplifier and the transimpedance amplifier send their signals to 6-pole Sallen-Key filters. These filters have a cutoff frequency of 10kHz(quote S. thesis), in order to filter out high frequency harmonics and other undesirable noise. Any signals higher than this will be severely attenuated in the captured data.
 
-The DACs inject digitization errors into the measurement signals. They are able to measure signals with resolutions shown in Table 1.
+The DACs inject digitization errors into the measurement signals. They are able to measure signals with resolutions shown in Table:~\ref{tab:dacRes}.
 
 
-Table 1: DAC resolution
-ResolutionFull scale measurementComment
-7.32mV30V
-.098mA100mAHi current (1A-1mA)
-.98uA1maMed current (1mA-1uA)
-.98nA1uALo current (1uA-1nA)
+\begin{table}[here]
+\renewcommand{\arraystretch}{1.3}
+\caption{DAC Resolution}
+\label{tab:dacRes}
+\centering
+\begin{tabular}{c||c||c}
+\hline
+\bfseries Resolution & \bfseries Full Scale Measurement & \bfseries Comment\\
+\hline\hline
+7.32mV & 30V & \\
+\hline\hline
+.098mA & 100mA & Hi Current (1A-1mA)\\
+\hline\hline
+.98uA & 1mA & Med Current (1mA-1uA) \\
+\hline\hline
+.98nA & 1uA & Lo Current (1uA-1nA)\\
+\hline
+\end{tabular}
+\end{table}
 
 Once the data is collected onto the microcontroller, it is sent to a PC via USB for further analysis. The data is sampled by the ADCs at a rate of baud and transferred to the PC at a rate of 2Mbaud. This allows for maximum flexibility on the PC side, where any data coming in at a rate greater than what is desired can simply be discarded.
 
+\section{Experimental Procedure}
+The experimental setup to anodize the anode of a titanium capacitor with the aforementioned circuitry is as follows. The anode sample is prepared by cleaning the surface oxide off with a chemical bath. It is then transported into a beaker of anodizing solution. The current source is connected to the DUT and acts as both a current source and data logger until the test is finished and the current through the DUT has dropped to the leakage current.
 
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
+\section{Experimental Results}
+Typical results from early materials can be found it Fig 7. For additional data and complete testing curves, see Steve’s thesis and my thesis.
 
+\begin{figure}[here]
+\centering
+\includegraphics[width=2.5in]{materialResults}
+\caption{Typical Results}
+\label{fig:materialResults}
+\end{figure}
 
 \appendices
 \section{Proof of the First Zonklar Equation}
 Appendix one text goes here.
 
-% you can choose not to have a title for an appendix
-% if you want by leaving the argument blank
-\section{}
-Appendix two text goes here.
-
-
 % use section* for acknowledgement
 \section*{Acknowledgment}
 
-
 The authors would like to thank...
+
+ARPA-E
+Dr. Merat
+Steven Ehret
 
 
 % Can use something like this to put references on a page
@@ -255,30 +273,6 @@ The authors would like to thank...
   \newpage
 \fi
 
-
-
-% trigger a \newpage just before the given reference
-% number - used to balance the columns on the last page
-% adjust value as needed - may need to be readjusted if
-% the document is modified later
-%\IEEEtriggeratref{8}
-% The "triggered" command can be changed if desired:
-%\IEEEtriggercmd{\enlargethispage{-5in}}
-
-% references section
-
-% can use a bibliography generated by BibTeX as a .bbl file
-% BibTeX documentation can be easily obtained at:
-% http://www.ctan.org/tex-archive/biblio/bibtex/contrib/doc/
-% The IEEEtran BibTeX style support page is at:
-% http://www.michaelshell.org/tex/ieeetran/bibtex/
-%\bibliographystyle{IEEEtran}
-% argument is your BibTeX string definitions and bibliography database(s)
-%\bibliography{IEEEabrv,../bib/paper}
-%
-% <OR> manually copy in the resultant .bbl file
-% set second argument of \begin to the number of references
-% (used to reserve space for the reference number labels box)
 \begin{thebibliography}{1}
 
 \bibitem{IEEEhowto:kopka}
@@ -287,49 +281,5 @@ H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
 
 \end{thebibliography}
 
-% biography section
-% 
-% If you have an EPS/PDF photo (graphicx package needed) extra braces are
-% needed around the contents of the optional argument to biography to prevent
-% the LaTeX parser from getting confused when it sees the complicated
-% \includegraphics command within an optional argument. (You could create
-% your own custom macro containing the \includegraphics command to make things
-% simpler here.)
-%\begin{biography}[{\includegraphics[width=1in,height=1.25in,clip,keepaspectratio]{mshell}}]{Michael Shell}
-% or if you just want to reserve a space for a photo:
-
-\begin{IEEEbiography}{Michael Shell}
-Biography text here.
-\end{IEEEbiography}
-
-% if you will not have a photo at all:
-\begin{IEEEbiographynophoto}{John Doe}
-Biography text here.
-\end{IEEEbiographynophoto}
-
-% insert where needed to balance the two columns on the last page with
-% biographies
-%\newpage
-
-\begin{IEEEbiographynophoto}{Jane Doe}
-Biography text here.
-\end{IEEEbiographynophoto}
-
-% You can push biographies down or up by placing
-% a \vfill before or after them. The appropriate
-% use of \vfill depends on what kind of text is
-% on the last page and whether or not the columns
-% are being equalized.
-
-%\vfill
-
-% Can be used to pull up biographies so that the bottom of the last one
-% is flush with the other column.
-%\enlargethispage{-5in}
-
-
-
-% that's all folks
 \end{document}
-
 

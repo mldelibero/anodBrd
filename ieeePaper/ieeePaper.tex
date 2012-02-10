@@ -60,57 +60,11 @@
 of Electrical and Computer Engineering}%
 \thanks{Special Thanks give to ARPA-E,Dr. Merat, Steven Ehret}}
 
-% note the % following the last \IEEEmembership and also \thanks - 
-% these prevent an unwanted space from occurring between the last author name
-% and the end of the author line. i.e., if you had this:
-% 
-% \author{....lastname \thanks{...} \thanks{...} }
-%                     ^------------^------------^----Do not want these spaces!
-%
-% a space would be appended to the last name and could cause every name on that
-% line to be shifted left slightly. This is one of those "LaTeX things". For
-% instance, "\textbf{A} \textbf{B}" will typeset as "A B" not "AB". To get
-% "AB" then you have to do: "\textbf{A}\textbf{B}"
-% \thanks is no different in this regard, so shield the last } of each \thanks
-% that ends a line with a % and do not let a space in before the next \thanks.
-% Spaces after \IEEEmembership other than the last one are OK (and needed) as
-% you are supposed to have spaces between the names. For what it is worth,
-% this is a minor point as most people would not even notice if the said evil
-% space somehow managed to creep in.
-
-
-
 % The paper headers
 \markboth{Journal of \LaTeX\ Class Files,~Vol.~6, No.~1, January~2007}%
 {Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Journals}
-% The only time the second header will appear is for the odd numbered pages
-% after the title page when using the twoside option.
-% 
-% *** Note that you probably will NOT want to include the author's ***
-% *** name in the headers of peer review papers.                   ***
-% You can use \ifCLASSOPTIONpeerreview for conditional compilation here if
-% you desire.
 
-
-
-
-% If you want to put a publisher's ID mark on the page you can do it like
-% this:
-%\IEEEpubid{0000--0000/00\$00.00~\copyright~2007 IEEE}
-% Remember, if you use this you must call \IEEEpubidadjcol in the second
-% column for its text to clear the IEEEpubid mark.
-
-
-
-% use for special paper notices
-%\IEEEspecialpapernotice{(Invited Paper)}
-
-
-
-
-% make the title area
 \maketitle
-
 
 \begin{abstract}
 %\boldmath
@@ -156,7 +110,7 @@ This hydrogen reacts with the electrons at the cathode to create hydrogen gas an
 
 This process is very similar to anodizing aluminum. For an explanation of that process visit (---quote Case encyclopedia). 
 
-Since the rate of oxide formation is dependent on the charge transport into the anode during anodization, a current source was selected. A typical anodization process with a current source will see the current and voltage progress as in Fig2
+Since the rate of oxide formation is dependent on the charge transport into the anode during anodization, a current source was selected. A typical anodization process with a current source will see the current and voltage progress as in (~\ref{currentMirror})
  
 
 \begin{figure}[here]
@@ -169,9 +123,101 @@ Figure 2: Anodization by a Constant Current – quote microminiturization
 
 If a constant current is introduced, the voltage will (ideally) rise linearly with time. This will happen until the DUT reaches the compliance voltage, at which point the current through the DUT will begin to drop off until it reaches the leakage current of the unpackaged capacitor. 
 
+\section{Design and Implementation of Custom System Used for Anodization}
 
-% needed in second column of first page if using \IEEEpubid
-%\IEEEpubidadjcol
+\begin{figure}[here]
+\centering
+\includegraphics[width=2.5in]{blockDiagram}
+\caption{Overall System Block Diagram}
+\label{fig:blockDiagram}
+\end{figure}
+
+The overall system flow (fig:~\ref{fig:blockDiagram}) , is as follows:
+
+The user sets the test parameters of current, voltage compliance, and testing time. Then the computer sends the configuration settings to the hardware with a command to start the test. The current source then turns on and regulates to the set current until the test is finished. The system is designed to work with a passive DUT. During the duration of the test, the current and voltage senses characterize the DUT and send the data to a PC for post processing.
+
+\subsection{Computer}
+
+The computer scripts for this setup are written in Python and are in charge of configuring the hardware for each test and logging data being sent from the board. The computer is not responsible for any real time control or system monitoring. Data is sent from the hardware at a high rate (see Current and Voltage Measurements section) and the PC subsamples this data and throws away what it does not want. In order to reduce the size of the data set long-term leakage tests (on the order of 24 hours) require data to be sampled at a slower rate after the anodization has completed.
+
+
+\subsection{Current Source}
+
+An ideal current source has the ability to output a constant, DC, current to any load with infinite voltage compliance. This ability makes a current source an attractive tool to use in anodization due to its ability to tightly control the rate of oxide growth on the anode.
+
+\begin{figure}[here]
+\centering
+\includegraphics[width=2.5in]{currentMirror}
+\caption{Current Control Circuitry}
+\label{fig:currentMirror}
+\end{figure}
+
+The current source implementation (~\ref{currentMirror}) was chosen around an op-amp based current mirror. The op-amp on the left, U4Z1C, is used to set and regulate the current through R23. This current functions as the reference current on the left leg of the current mirror. The op-amp on the right, U4Z1B, forces the voltage drop across R17 and R18 to be the same, hence causing the current in the right leg to go as:
+
+\begin{equation}
+I2 = I1*R18/R17
+\end{equation}
+
+With the values chosen in this design, this equates to a 10x current amplification from the reference to the current output. The adjustable supply voltage is applied to the node connecting resistors R17 and R18. The current source will be able supply a constant current up to an effective compliance voltage of the supply voltage minus the voltage drops of R17, the pass transistor, and the protection diode.
+
+The real current source has several practical limitations that provide less than ideal performance. 
+
+ 
+\begin{figure}[here]
+\centering
+\includegraphics[width=2.5in]{safeOpArea}
+\caption{Current Source: Safe Operating Area}
+\label{fig:safeOpArea}
+\end{figure}
+
+The safe operating area (fig: ~\ref{fig:safeOpArea}) is smaller than the desired operating output of 30V at 100mA. This difference comes from the limitations in the power dissipation of the pass transistor, U18Z1, in Fig. 2. Assuming the worse case scenario of a short on the output, the allowable output current for a given voltage compliance can be found as:
+
+\begin{equation}
+Iout = Prating / Vcomp
+\end{equation}
+
+The current source operates by controlling the gate voltage of U18Z1 in F2ig 2 to ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of (fig:~\ref{currentMirror}) is limited by the Gain Bandwidth Product of U4X1B (1.8Mhz – reference datasheet). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
+
+The ideal current source has the ability to output any desired current over its range with infinite precision. The current source in this design is limited in this regard by the discretization error of setting the current. Referring to (fig:~\ref{currentMirror}) the signal i set4 is used as a control signal to set the reference current in the device. This signal is controlled by a Microchip MCP4812 10-bit DAC. A first approximation of the discretization uncertainty in selecting DAC outputs can be found by:
+
+
+\begin{equation}
+U = Vi_set /(2n-1) / (R23 + Rpot) *(R18/R17)
+\end{equation}
+
+Which yields an uncertainty in the current output of +/- 0.5mA. This can be calibrated away for a single current output, but all other outputs would be off by as much as the uncertainty.
+
+Also, the protection diode, U39, in (fig:~\ref{currentMirror}) has the effect of increasing the voltage compliance as the current drops off after anodization. Looking at a standard diode curve, the voltage drop across the diode is roughly a constant 0.7V for high currents and exponentially diminishes towards zero as the current decreases. The tests are designed to not only anodize, but also continue to measure the long-term leakage current afterwards. This means that the current draw will decrease to the nA range, causing the effective voltage compliance to increase to about a diode drop above its anodization level. This affect will need to be considered during the analysis of the anodization data.
+
+-----------------Add Sections on Accuracy, Precision, and Repeatability. 
+
+DUT
+
+The device under test was typically meant to be a titanium anode to be anodized or a titanium capacitor. The device is able to operate with resistive loads and any capacitive loads (with capacitance large enough for the system to be able to respond.
+
+
+Current and Voltage Measurements
+
+The second part of the instrumentation is the measurement circuitry. An ideal measurement system would have no error or time delay when measuring the signal. It would also be able to perfectly reconstruct the signal for post analysis. 
+ 
+Figure 6: Measurement Circuitry
+The measurement circuitry, Fig 4, implemented consists of two different parts, voltage and current measurements. The voltage of the DUT is measured differentially by Analog Device’s AD8220 JFET instrumentation amplifier. This output is scaled and then sent to a 12-bit DAC. The current through the DUT is measure from a low side measurement topology know and a transimpedance amplifier. The amplifier creates a virtual ground at the negative terminal of the op-amp,U39, that allows for a current reading without subjecting the measurement circuitry to a high voltage and without floating the bottom of the DUT above ground.
+
+Since it is desirable the measure both the anodization current and the leakage current afterwards, a basic transimpedance amplifier design was modified to include 3 switched feedback paths. This allows the current measurement to measure currents over 8 orders of magnitude. The circuitry can handle currents from 10nA to 100mA.
+
+The real measurement circuitry has several practical limitations that limit it from performing ideally. Both the differential amplifier and the transimpedance amplifier send their signals to 6-pole Sallen-Key filters. These filters have a cutoff frequency of 10kHz(quote S. thesis), in order to filter out high frequency harmonics and other undesirable noise. Any signals higher than this will be severely attenuated in the captured data.
+
+The DACs inject digitization errors into the measurement signals. They are able to measure signals with resolutions shown in Table 1.
+
+Table 1: DAC resolution
+ResolutionFull scale measurementComment
+7.32mV30V
+.098mA100mAHi current (1A-1mA)
+.98uA1maMed current (1mA-1uA)
+.98nA1uALo current (1uA-1nA)
+
+Once the data is collected onto the microcontroller, it is sent to a PC via USB for further analysis. The data is sampled by the ADCs at a rate of baud and transferred to the PC at a rate of 2Mbaud. This allows for maximum flexibility on the PC side, where any data coming in at a rate greater than what is desired can simply be discarded.
+
 
 \subsubsection{Subsubsection Heading Here}
 Subsubsection text here.

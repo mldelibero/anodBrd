@@ -57,33 +57,21 @@ This paper presents a custom circuit for controlling the anodization of titanium
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-IEEEtran, journal, \LaTeX, paper, template.
+%IEEEtran, journal, \LaTeX, paper, template.
 \end{IEEEkeywords}
 
 \IEEEpeerreviewmaketitle
 
 \section{Introduction}
 
-Citation:
-\cite{knuth84}
-\cite{tiCharHag}
-
-\IEEEPARstart{C}{apacitors} with high energy and power are essential for efficient management of electrical power.  Order of magnitude increases are desired for energy and power density. This may be possible with new self-repairing titanate dielectric capacitors using high surface area doped titanium and doped zirconium-titanium.  Anodizing at DC voltages forms a uniform dielectric film of doped titania (the energy density of this dielectric is estimated to be on the order of 150J/$cm^3$) \cite{tiSponge}. This and the volume fraction of dielectric determines the energy density of the capacitor.
+\IEEEPARstart{C}{apacitors} with high energy and power are essential for efficient management of electrical power.  Order of magnitude increases are desired for energy and power density. This may be possible with new self-repairing titanate dielectric capacitors using high surface area doped titanium and doped zirconium-titanium.  Anodizing at DC voltages forms a uniform dielectric film of doped titanium (the energy density of this dielectric is estimated to be on the order of 150J/$cm^3$) \cite{tiSponge}. This and the volume fraction of dielectric determines the energy density of the capacitor.
 
 One of the major problems plaguing titanium electrolytic capacitors has been their high leakage currents \cite{tiCharHag}. In order to further research into titanium capacitors, custom anodization instrumentation has been developed to anodize and characterize a large number of candidate titanium capacitor materials. This instrumentation was necessary because conventional systems do not have the necessary dynamic range (1A-1nA measurement) or repeatability (need to get some kind of number) needed in this application.
 
 
-
-\IEEEPARstart{T}{itanium} capacitors are being looked at more closely as a possible alternative to tantalum capacitors due to their lower material cost and possibly better temperature characteristics (quote Welsch, intro ARPA-E meeting). In the past, titanium capacitors have not been feasible alternatives due to their high leakage currents (quote Ki’s paper). In order to further research into titanium capacitors, custom anodization instrumentation has been developed to anodize and characterize prototype titanium capacitor materials. This instrumentation was necessary because conventional systems do not have the necessary dynamic range (1A-1nA measurement) or repeatability (need to get some kind of number) needed in this application.
-
-
 \subsection{Anodization Process and Requirements}
 
-Citation!!!!!!
-\cite{knuth84}
-\cite{tiCharHag}
-
-Anodization is the act of growing an oxide layer on top of a metal anode. This is useful in capacitors because it allows a capacitor to store significantly more energy then it would have otherwise. The anodization process is preformed by immersing an anode and a cathode into an electrolyte solution and then hooking up either a voltage or current source across the sample. This process can be seen in Fig:  ~\ref{fig:anodSetup}
+Anodization is the act of growing an oxide layer (dielectric) on top of a metal anode. Dielectrics are useful because they allow capacitors to store more energy for a given electric field \cite{cwruEncDie}. The anodization process is preformed by connecting a voltage or current source to an anode and a cathode and immersing them in an electrolyte solution as shown in Fig. ~\ref{Fig. anodSetup}
 
 \begin{figure}[here]
 \centering
@@ -93,7 +81,7 @@ Anodization is the act of growing an oxide layer on top of a metal anode. This i
 \end{figure}
 
 
-Referring to Fig:~\ref{fig:anodSetup}, in the simplest case, the current transfer is an ionic transfer where the Ti anode reacts with O2 to create a TiO2 oxide layer. The reaction at the metal-oxide surface can be written as:
+Referring to Fig. ~\ref{fig:anodSetup}, in the simplest case, the current transfer is an ionic transfer where the Ti anode reacts with $O_{2}$ to create a $TiO_{2}$ oxide layer. The reaction at the metal-oxide surface can be written as:
 
 \begin{equation}
 Ti + 02 => TiO2 + 4e
@@ -107,18 +95,17 @@ This hydrogen reacts with the electrons at the cathode to create hydrogen gas an
 4H + 4e => 2H20
 \end{equation}
 
-This process is very similar to anodizing aluminum. For an explanation of that process visit (---quote Case encyclopedia). 
+This process is very similar to anodizing aluminum. For an explanation of that process visit \cite{cwruEncAlanod}.
 
-Since the rate of oxide formation is dependent on the charge transport into the anode during anodization, a current source was selected. A typical anodization process with a current source will see the current and voltage progress as in (~\ref{fig:currentMirror})
+Since the rate of oxide formation is dependent on the charge transport into the anode during anodization, a current source was selected. A typical anodization process with a current source will see the current and voltage progress as in (~\ref{fig:currentMirror}).
  
 
 \begin{figure}[here]
 \centering
 \includegraphics{anodCurve}
-\caption{Anodization Curve}
+\caption{Anodization Curve \cite{tiMinit}}
 \label{fig:anodCurve}
 \end{figure}
-Figure 2: Anodization by a Constant Current – quote microminiturization
 
 If a constant current is introduced, the voltage will (ideally) rise linearly with time. This will happen until the DUT reaches the compliance voltage, at which point the current through the DUT will begin to drop off until it reaches the leakage current of the unpackaged capacitor. 
 
@@ -131,7 +118,7 @@ If a constant current is introduced, the voltage will (ideally) rise linearly wi
 \label{fig:blockDiagram}
 \end{figure}
 
-The overall system flow (fig:~\ref{fig:blockDiagram}) , is as follows:
+The overall system flow (Fig. ~\ref{fig:blockDiagram}) , is as follows:
 
 The user sets the test parameters of current, voltage compliance, and testing time. Then the computer sends the configuration settings to the hardware with a command to start the test. The current source then turns on and regulates to the set current until the test is finished. The system is designed to work with a passive DUT. During the duration of the test, the current and voltage senses characterize the DUT and send the data to a PC for post processing.
 
@@ -152,7 +139,7 @@ An ideal current source has the ability to output a constant, DC, current to any
 \end{figure}
 
 
-The current source implementation (fig:~\ref{fig:currentMirror}) was chosen around an op-amp based current mirror. The op-amp on the left, U4Z1C, is used to set and regulate the current through R23. This current functions as the reference current on the left leg of the current mirror. The op-amp on the right, U4Z1B, forces the voltage drop across R17 and R18 to be the same, hence causing the current in the right leg to go as:
+The current source implementation (Fig. ~\ref{fig:currentMirror}) was chosen around an op-amp based current mirror. The op-amp on the left, U4Z1C, is used to set and regulate the current through R23. This current functions as the reference current on the left leg of the current mirror. The op-amp on the right, U4Z1B, forces the voltage drop across R17 and R18 to be the same, hence causing the current in the right leg to go as:
 
 \begin{equation}
 I2 = I1*R18/R17
@@ -170,15 +157,15 @@ The real current source has several practical limitations that provide less than
 \label{fig:safeOpArea}
 \end{figure}
 
-The safe operating area (fig: ~\ref{fig:safeOpArea}) is smaller than the desired operating output of 30V at 100mA. This difference comes from the limitations in the power dissipation of the pass transistor, U18Z1, in fig:~\ref{fig:currentMirror}. Assuming the worse case scenario of a short on the output, the allowable output current for a given voltage compliance can be found as:
+The safe operating area (Fig.  ~\ref{fig:safeOpArea}) is smaller than the desired operating output of 30V at 100mA. This difference comes from the limitations in the power dissipation of the pass transistor, U18Z1, in Fig. ~\ref{fig:currentMirror}. Assuming the worse case scenario of a short on the output, the allowable output current for a given voltage compliance can be found as:
 
 \begin{equation}
 Iout = Prating / Vcomp
 \end{equation}
 
-The current source operates by controlling the gate voltage of U18Z1 in fig:~\ref{fig:currentMirror}) ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of (fig:~\ref{fig:currentMirror}) is limited by the Gain Bandwidth Product of U4X1B (1.8Mhz – reference datasheet). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
+The current source operates by controlling the gate voltage of U18Z1 in Fig. ~\ref{fig:currentMirror}) ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of (Fig. ~\ref{fig:currentMirror}) is limited by the Gain Bandwidth Product of U4X1B (1.8Mhz – reference datasheet). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
 
-The ideal current source has the ability to output any desired current over its range with infinite precision. The current source in this design is limited in this regard by the discretization error of setting the current. Referring to (fig:~\ref{fig:currentMirror}) the signal i set4 is used as a control signal to set the reference current in the device. This signal is controlled by a Microchip MCP4812 10-bit DAC. A first approximation of the discretization uncertainty in selecting DAC outputs can be found by:
+The ideal current source has the ability to output any desired current over its range with infinite precision. The current source in this design is limited in this regard by the discretization error of setting the current. Referring to (Fig. ~\ref{fig:currentMirror}) the signal i set4 is used as a control signal to set the reference current in the device. This signal is controlled by a Microchip MCP4812 10-bit DAC. A first approximation of the discretization uncertainty in selecting DAC outputs can be found by:
 
 
 \begin{equation}
@@ -187,7 +174,7 @@ U = Vi_set /(2n-1) / (R23 + Rpot) *(R18/R17)
 
 Which yields an uncertainty in the current output of +/- 0.5mA. This can be calibrated away for a single current output, but all other outputs would be off by as much as the uncertainty.
 
-Also, the protection diode, U39, in (fig:~\ref{fig:currentMirror}) has the effect of increasing the voltage compliance as the current drops off after anodization. Looking at a standard diode curve, the voltage drop across the diode is roughly a constant 0.7V for high currents and exponentially diminishes towards zero as the current decreases. The tests are designed to not only anodize, but also continue to measure the long-term leakage current afterwards. This means that the current draw will decrease to the nA range, causing the effective voltage compliance to increase to about a diode drop above its anodization level. This affect will need to be considered during the analysis of the anodization data.
+Also, the protection diode, U39, in (Fig. ~\ref{fig:currentMirror}) has the effect of increasing the voltage compliance as the current drops off after anodization. Looking at a standard diode curve, the voltage drop across the diode is roughly a constant 0.7V for high currents and exponentially diminishes towards zero as the current decreases. The tests are designed to not only anodize, but also continue to measure the long-term leakage current afterwards. This means that the current draw will decrease to the nA range, causing the effective voltage compliance to increase to about a diode drop above its anodization level. This affect will need to be considered during the analysis of the anodization data.
 
 -----------------Add Sections on Accuracy, Precision, and Repeatability. 
 
@@ -208,7 +195,7 @@ The second part of the instrumentation is the measurement circuitry. An ideal me
 \label{fig:measCir}
 \end{figure}
 
-The measurement circuitry (fig:~\ref{fig:measCir}) implemented consists of two different parts, voltage and current measurements. The voltage of the DUT is measured differentially by Analog Device’s AD8220 JFET instrumentation amplifier. This output is scaled and then sent to a 12-bit DAC. The current through the DUT is measure from a low side measurement topology know and a transimpedance amplifier. The amplifier creates a virtual ground at the negative terminal of the op-amp,U39, that allows for a current reading without subjecting the measurement circuitry to a high voltage and without floating the bottom of the DUT above ground.
+The measurement circuitry (Fig. ~\ref{fig:measCir}) implemented consists of two different parts, voltage and current measurements. The voltage of the DUT is measured differentially by Analog Device’s AD8220 JFET instrumentation amplifier. This output is scaled and then sent to a 12-bit DAC. The current through the DUT is measure from a low side measurement topology know and a transimpedance amplifier. The amplifier creates a virtual ground at the negative terminal of the op-amp,U39, that allows for a current reading without subjecting the measurement circuitry to a high voltage and without floating the bottom of the DUT above ground.
 
 Since it is desirable the measure both the anodization current and the leakage current afterwards, a basic transimpedance amplifier design was modified to include 3 switched feedback paths. This allows the current measurement to measure currents over 8 orders of magnitude. The circuitry can handle currents from 10nA to 100mA.
 
@@ -252,14 +239,10 @@ Typical results from early materials can be found it Fig 7. For additional data 
 \label{fig:materialResults}
 \end{figure}
 
-\appendices
-\section{Proof of the First Zonklar Equation}
-Appendix one text goes here.
-
 % use section* for acknowledgement
 \section*{Acknowledgment}
 
-The authors would like to thank...
+The author would like to thank...
 
 ARPA-E,
 Dr. Merat,
@@ -272,19 +255,22 @@ Steven Ehret,
 \fi
 
 \bibliographystyle{IEEEtran}
-\bibliography{IEEEabrv,mybibfile}
+%\bibliography{IEEEabrv,mybibfile}
 \begin{thebibliography}{1}
-
-\bibitem{tiCharHag} Ki, Jun-Wan and Welsch, Gerhard \emph{"(H. Hagiwara and A. Yamashita, Characteristics of Titanium Electrolytic Capacitors, Proceedings of the IEEE, October 1963)."}, Addison-Wesley, Reading,
-Massachusetts, second edition, 1984,
 
 \bibitem{tiSponge} Ki, Jun-Wan and Welsch, Gerhard \emph{"Titanium Sponge on Titanium Substrate"}, Addison-Wesley, Reading,
 Massachusetts, second edition, 1984,
 
-\bibitem{refx} Knuth, D.E. \emph{The TEXbook}, Addison-Wesley, Reading,
+\bibitem{tiCharHag} Ki, Jun-Wan and Welsch, Gerhard \emph{"(H. Hagiwara and A. Yamashita, Characteristics of Titanium Electrolytic Capacitors, Proceedings of the IEEE, October 1963)."}, Addison-Wesley, Reading,
 Massachusetts, second edition, 1984,
 
-\bibitem{knuth84} Knuth, D.E. \emph{The TEXbook}, Addison-Wesley, Reading,
+\bibitem{cwruEncDie} Ki, Jun-Wan and Welsch, Gerhard \emph{"http://electrochem.cwru.edu/encycl/art-d01-dielectrics.htm"}, Addison-Wesley, Reading,
+Massachusetts, second edition, 1984,
+
+\bibitem{cwruEncAlanod} Ki, Jun-Wan and Welsch, Gerhard \emph{"http://electrochem.cwru.edu/encycl/art-a02-anodizing.htm"}, Addison-Wesley, Reading,
+Massachusetts, second edition, 1984,
+
+\bibitem{tiMinit} Ki, Jun-Wan and Welsch, Gerhard \emph{"Titanium Printed Capacitors for Miniturizaiton."}, Addison-Wesley, Reading,
 Massachusetts, second edition, 1984,
 
 \end{thebibliography}

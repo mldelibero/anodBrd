@@ -39,7 +39,7 @@
         S. Ehret,~\IEEEmembership{Member,~IEEE,}
         and F. Merat,~\IEEEmembership{Senior Member,~IEEE}%
 
-\thanks{This work was supported by ARPA-E under grant \#DE-AR0000116}}
+\thanks{This work was supported by ARPA-E under grant \#DE-AR0000116.}}
 
 \maketitle
 
@@ -62,7 +62,7 @@ One of the major problems plaguing titanium electrolytic capacitors has been the
 
 \subsection{Anodization Process and Requirements}
 
-Anodization is the act of growing an oxide layer (dielectric) on top of a metal anode. Dielectrics are useful because they allow capacitors to store more energy for a given electric field \cite{cwruEncDie}. The anodization process is preformed by connecting a voltage or current source to an anode and a cathode and immersing them in an electrolyte solution as shown in Fig. ~\ref{fig:anodSetup}
+Anodization is the act of growing an oxide layer (dielectric) on top of a metal anode. Dielectrics are benificial because they allow capacitors to store more energy for a given electric field \cite{cwruEncDie}. The anodization process is preformed by connecting a voltage or current source to an anode and a cathode and immersing them in an electrolyte solution as shown in Fig. ~\ref{fig:anodSetup}
 
 \begin{figure}[here]
 \centering
@@ -157,7 +157,7 @@ The safe operating area (Fig.  ~\ref{fig:safeOpArea}) is smaller than the desire
 I_{out} = P_{rating} / V_{comp}
 \end{equation}
 
-The current source operates by controlling the gate voltage of U18Z1 in Fig. ~\ref{fig:currentMirror}) ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of (Fig. ~\ref{fig:currentMirror}) is limited by the Gain Bandwidth Product of the U4X1B (1.8Mhz). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
+The current source operates by controlling the gate voltage of U18Z1 in Fig. ~\ref{fig:currentMirror}) ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of Fig. ~\ref{fig:currentMirror} is limited by the Gain Bandwidth Product of the U4X1B (1.8Mhz). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
 
 The ideal current source has the ability to output any desired current over its range with infinite precision. The current source in this design is limited in this regard by the discretization error of setting the current. Referring to (Fig. ~\ref{fig:currentMirror}) the signal $i_{set4}$ is used as a control signal to set the reference current in the device. This signal is controlled by a Microchip MCP4812 10-bit DAC. A first approximation of the discretization uncertainty in selecting DAC outputs can be found by:
 
@@ -167,7 +167,7 @@ U = Vi_{set} /(2n-1) / (R_{23} + R_{pot}) *(R_{18}/R_{17})
 \end{equation}
 
 
-Which yields an uncertainty in the current output of +/- 0.5mA. Calibration can eliminate this error for a single current output, but all other outputs would be off by as much as the uncertainty.
+Which yields an uncertainty in the current output of +/- 0.5mA. Calibration can eliminate this error for a single current output, but all other outputs will be in error by as much as the uncertainty.
 
 The protection diode, U39, in (Fig. ~\ref{fig:currentMirror}) has the effect of increasing the voltage compliance as the current drops off after anodization. Looking at a standard diode curve, the voltage drop across the diode is roughly a constant 0.7V for high currents and exponentially diminishes towards zero as the current decreases. The tests are designed to not only anodize, but also continue to measure the long-term leakage current afterwards. This means that the current draw will decrease to the nA range, causing the effective voltage compliance to increase to about a diode drop above its anodization level. This affect will need to be considered during the analysis of the anodization data.
 
@@ -192,7 +192,7 @@ The measurement circuitry (Fig. ~\ref{fig:measCir}) implemented consists of two 
 
 Since it is desirable the measure both the anodization current and the leakage current, a basic transimpedance amplifier design was modified to include three switched feedback paths. This allows the current measurement to measure currents over eight orders of magnitude. The circuitry can handle currents from 10nA to 100mA. The three current ranges are listed in Table:~\ref{tab:dacRes}.
 
-The real measurement circuitry has several practical limitations that limit it from performing ideally. Both the differential amplifier and the transimpedance amplifier send their signals to 6-pole Sallen-Key filters. These filters have a cutoff frequency of 10kHz \cite{sThesis} in order to filter out high frequency harmonics and other undesirable noise. Any signals higher than this will be severely attenuated in the captured data.
+The real measurement circuitry has several practical limitations that limit it from performing ideally. Both the differential amplifier and the transimpedance amplifier send their signals to 6-pole Sallen-Key filters. These filters have a cutoff frequency of 10kHz\cite{sThesis} in order to filter out high frequency harmonics and other undesirable noise. Any signals higher than this will be severely attenuated in the captured data.
 
 The DACs inject digitization errors into the measurement signals. They are able to measure signals with resolutions shown in Table:~\ref{tab:dacRes}.
 
@@ -202,16 +202,16 @@ The DACs inject digitization errors into the measurement signals. They are able 
 \caption{DAC Resolution}
 \label{tab:dacRes}
 \centering
-\begin{tabular}{c||c||c}
+\begin{tabular}{c|c|c}
 \hline
 \bfseries Resolution & \bfseries Full Scale Measurement & \bfseries Comment\\
 \hline\hline
 7.32mV & 30V & \\
-\hline\hline
+\hline
 .098mA & 100mA & Hi Current (1A-1mA)\\
-\hline\hline
+\hline
 .98uA & 1mA & Med Current (1mA-1uA) \\
-\hline\hline
+\hline
 .98nA & 1uA & Lo Current (1uA-1nA)\\
 \hline
 \end{tabular}
@@ -242,6 +242,7 @@ ARPA-E,
 Steven Ehret,
 Dr. Francis Merat,
 Dr. Gerhard Welsch,
+Laurie Dudik,
 and Donald McGervey
 
 % Can use something like this to put references on a page
@@ -266,7 +267,7 @@ and Donald McGervey
 
 \bibitem{sThesis} S. Ehret, \emph{"Instrumentation For Anodization and In-Situ Testing of Titanium Alloys For Capacitor Anodes"}, Dept. Elec. Eng., Case Western Reserve Univ., Ohio, Cleveland, 2011.
 
-\bibitem{mThesis} M. DeLibero, \emph{"Instrumentation for the Evaluation of Titanium Electrolytic Capacitors"}, Dept. Elec. Eng., Case Western Reserve Univ., Ohio, Cleveland, 2012.
+\bibitem{mThesis} M. DeLibero, \emph{"Instrumentation for the Evaluation of Titanium Electrolytic Capacitors"}, Dept. Elec. Eng., Case Western Reserve Univ., Ohio, Cleveland, Jun. 2012.
 
 \end{thebibliography} 
 

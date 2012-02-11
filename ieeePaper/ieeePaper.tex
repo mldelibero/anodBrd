@@ -47,7 +47,6 @@
 This paper presents a custom circuit for controlling the anodization of titanium capacitors and characterizing their performance. The circuitry provides a constant current source of 0-100mA up to a compliance voltage of 30V. The system can monitor and record leakage currents down to 10 nA over periods of up to 24 hours. Typical results obtained using sputtered titanium-zirconium capacitors are presented.
 \end{abstract}
 
-% Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
 Capacitor, Switched Capacitor Circuits
 \end{IEEEkeywords}
@@ -99,7 +98,7 @@ Since the rate of oxide formation is dependent on the charge transport into the 
 \label{fig:anodCurve}
 \end{figure}
 
-Our typical anodization tests work with a constant current of 20mA and a forming voltage of 30V. The anodization reaches the forming voltage in periods on the order of 30 seconds. The forming voltage then remains constant while the leakage current decreases over  a much longer time period (on the order of 24 hours) to currents on the order of 1 microampere or less. The exact times and values are dependent upon the material and the size of the electrode.
+Our typical anodization tests work with a constant current of 20mA and a forming voltage of 30V. The anodization reaches the forming voltage in periods on the order of 30 seconds. The forming voltage then remains constant while the leakage current decreases over  a much longer time period (on the order of 24 hours) to currents on the order of 1 uA or less. The exact times and values are dependent upon the material and the size of the electrode.
 
 If a constant current is introduced, the voltage will (ideally) rise linearly with time. This will happen until the anode reaches the compliance voltage, at which point the current through the DUT will begin to drop off until it reaches the leakage current of the unpackaged capacitor. 
 
@@ -114,7 +113,7 @@ If a constant current is introduced, the voltage will (ideally) rise linearly wi
 
 \subsection{Computer Control and Data Acquisition}
 
-The user sets the test parameters of current, voltage compliance, and testing time. The anodization is then controlled by a set of Python scripts, which appropriately configure the hardware and control the data logging. Voltage and current measurements are sampled at a constant, high rate and all data is recorded. However, once the electrode has reached the forming voltage and the (leakage) current is slowly decreasing over time the data measurements are subsampled and only a fraction of the sampled data is preserved.  (say more on this)
+The user sets the test parameters of current, voltage compliance, and testing time. The anodization is then controlled by a set of Python scripts, which appropriately configure the hardware and control the data logging. Voltage and current measurements are sampled at a constant, high rate and all data is recorded. However, once the electrode has reached the forming voltage and the (leakage) current is slowly decreasing over time the data measurements are subsampled, and only a fraction of the sampled data is preserved.  (say more on this)
 
 \subsection{Current Source}
 
@@ -158,9 +157,9 @@ The safe operating area (Fig.  ~\ref{fig:safeOpArea}) is smaller than the desire
 I_{out} = P_{rating} / V_{comp}
 \end{equation}
 
-The current source operates by controlling the gate voltage of U18Z1 in Fig. ~\ref{fig:currentMirror}) ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of (Fig. ~\ref{fig:currentMirror}) is limited by the Gain Bandwidth Product of the U4X1B (1.8Mhz – reference datasheet). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
+The current source operates by controlling the gate voltage of U18Z1 in Fig. ~\ref{fig:currentMirror}) ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of (Fig. ~\ref{fig:currentMirror}) is limited by the Gain Bandwidth Product of the U4X1B (1.8Mhz). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
 
-The ideal current source has the ability to output any desired current over its range with infinite precision. The current source in this design is limited in this regard by the discretization error of setting the current. Referring to (Fig. ~\ref{fig:currentMirror}) the signal i set4 is used as a control signal to set the reference current in the device. This signal is controlled by a Microchip MCP4812 10-bit DAC. A first approximation of the discretization uncertainty in selecting DAC outputs can be found by:
+The ideal current source has the ability to output any desired current over its range with infinite precision. The current source in this design is limited in this regard by the discretization error of setting the current. Referring to (Fig. ~\ref{fig:currentMirror}) the signal $i_{set4}$ is used as a control signal to set the reference current in the device. This signal is controlled by a Microchip MCP4812 10-bit DAC. A first approximation of the discretization uncertainty in selecting DAC outputs can be found by:
 
 
 \begin{equation}

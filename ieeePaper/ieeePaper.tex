@@ -1,5 +1,5 @@
 \documentclass[journal]{IEEEtran}
-
+\usepackage{verbatim}
 \usepackage{cite}
 % The latest version can be obtained at:
 % http://www.ctan.org/tex-archive/macros/latex/contrib/cite/
@@ -33,7 +33,6 @@
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 \begin{document}
-
 \title{Instrumentation For The Anodization and Characterization of Titanium Electrodes for Electrolytic Capacitors}
 
 \author{M. DeLibero,~\IEEEmembership{Student Member,~IEEE,}
@@ -173,11 +172,9 @@ Which yields an uncertainty in the current output of +/- 0.5mA. Calibration can 
 
 The protection diode, U39, in (Fig. ~\ref{fig:currentMirror}) has the effect of increasing the voltage compliance as the current drops off after anodization. Looking at a standard diode curve, the voltage drop across the diode is roughly a constant 0.7V for high currents and exponentially diminishes towards zero as the current decreases. The tests are designed to not only anodize, but also continue to measure the long-term leakage current afterwards. This means that the current draw will decrease to the nA range, causing the effective voltage compliance to increase to about a diode drop above its anodization level. This affect will need to be considered during the analysis of the anodization data.
 
-The circuitry is still being tested for emperical accuracy and repeatability, therefore that data is not yet available.
-
 \subsection{DUT}
 
-The device under test was typically meant to be a titanium anode to be anodized or a titanium capacitor. The device is able to operate with resistive loads and any capacitive loads (with capacitance large enough for the system to be able to respond.
+The device under test is typically a titanium anode to be anodized or a titanium capacitor. The device is able to operate with resistive loads and any capacitive loads (with capacitance large enough for the system to be able to respond.
 
 
 \subsection{Current and Voltage Measurements}
@@ -192,9 +189,9 @@ The second part of the instrumentation is the measurement circuitry. An ideal me
 \label{fig:measCir}
 \end{figure}
 
-The measurement circuitry (Fig. ~\ref{fig:measCir}) implemented consists of two different parts, voltage and current measurements. The voltage of the DUT is measured differentially by Analog Device’s AD8220 JFET instrumentation amplifier. This output is scaled and then sent to a 12-bit DAC. The current through the DUT is measure from a low side measurement topology know and a transimpedance amplifier. The amplifier creates a virtual ground at the negative terminal of the op-amp, U39, that allows for a current reading without subjecting the measurement circuitry to a high voltage and without floating the bottom of the DUT above ground.
+The measurement circuitry (Fig. ~\ref{fig:measCir}) implemented consists of two different parts, voltage and current measurements. The voltage of the DUT is measured differentially by an Analog Device’s AD8220 JFET instrumentation amplifier. This output is scaled and then sent to a 12-bit DAC. The current through the DUT is measure from a low side measurement topology known and a transimpedance amplifier. The amplifier creates a virtual ground at the negative terminal of the op-amp, U39, that allows for a current reading without subjecting the measurement circuitry to a high voltage and without floating the bottom of the DUT above ground.
 
-Since it is desirable the measure both the anodization current and the leakage current afterwards, a basic transimpedance amplifier design was modified to include 3 switched feedback paths. This allows the current measurement to measure currents over 8 orders of magnitude. The circuitry can handle currents from 10nA to 100mA. The three current ranges are listed Table:~\ref{tab:dacRes}.
+Since it is desirable the measure both the anodization current and the leakage current, a basic transimpedance amplifier design was modified to include three switched feedback paths. This allows the current measurement to measure currents over eight orders of magnitude. The circuitry can handle currents from 10nA to 100mA. The three current ranges are listed in Table:~\ref{tab:dacRes}.
 
 The real measurement circuitry has several practical limitations that limit it from performing ideally. Both the differential amplifier and the transimpedance amplifier send their signals to 6-pole Sallen-Key filters. These filters have a cutoff frequency of 10kHz \cite{sThesis} in order to filter out high frequency harmonics and other undesirable noise. Any signals higher than this will be severely attenuated in the captured data.
 
@@ -216,20 +213,21 @@ The DACs inject digitization errors into the measurement signals. They are able 
 \hline\hline
 .98uA & 1mA & Med Current (1mA-1uA) \\
 \hline\hline
-                    .98nA & 1uA & Lo Current (1uA-1nA)\\
-                        \hline
-                        \end{tabular}
-                        \end{table}
+.98nA & 1uA & Lo Current (1uA-1nA)\\
+\hline
+\end{tabular}
+\end{table}
 
-                        Once the data is collected onto the microcontroller, it is sent to a PC via USB for further analysis. The data is sampled by the ADCs at a rate of baud and transferred to the PC at a rate of 2Mbaud. This allows for maximum flexibility on the PC side, where any data coming in at a rate greater than what is desired can simply be discarded.
+Once the data is collected by the microcontroller, it is sent to a PC via USB for further analysis. The data is sampled by the ADCs at a rate of baud and transferred to the PC at a rate of 2Mbaud. This allows for maximum flexibility on the PC side, where any data coming in at a rate greater than what is desired can simply be discarded.
 
 \section{Experimental Procedure}
-The experimental setup to anodize the anode of a titanium capacitor with the aforementioned circuitry is as follows. The anode sample is prepared by cleaning the surface oxide off with a chemical bath. It is then transported into a beaker of anodizing solution. The current source is connected to the DUT and acts as both a current source and data logger until the test is finished and the current through the DUT has dropped to the leakage current.
+The experimental setup to anodize the anode of a titanium capacitor with the aforementioned circuitry is as follows. The anode sample is prepared by cleaning the surface oxide off with a chemical bath. It is then placed in a beaker of anodizing solution. The current source is connected to the DUT and acts as both a current source and data logger until the test is finished and the current through the DUT has dropped to the leakage current.
 
 \section{Experimental Results}
 Typical results from early materials can be found it Fig. 7. For additional data and complete testing curves, see \cite{sThesis} and \cite{mThesis}.
 
-{figure}[here]
+
+\begin{figure}[here]
 \centering
 \includegraphics[width=3.5in]{measData}
 \caption{Typical Results}

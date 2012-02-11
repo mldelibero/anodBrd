@@ -13,7 +13,7 @@
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
    \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
-
+\fi
 \usepackage[cmex10]{amsmath}
 % *** SPECIALIZED LIST PACKAGES ***
 %
@@ -29,33 +29,17 @@
 
 \usepackage{mdwmath}
 \usepackage{mdwtab}
-% http://www.ctan.org/tex-archive/macros/latex/contrib/mdwtools/
 
-%\usepackage{eqparbox}
-% http://www.ctan.org/tex-archive/macros/latex/contrib/eqparbox/
-
-% *** SUBFIGURE PACKAGES ***
-%\usepackage[tight,footnotesize]{subfigure}
-% http://www.ctan.org/tex-archive/obsolete/macros/latex/contrib/subfigure/
-
-%\usepackage[caption=false]{caption}
-%\usepackage[font=footnotesize]{subfig}
-%\usepackage[caption=false,font=footnotesize]{subfig}
-% http://www.ctan.org/tex-archive/macros/latex/contrib/subfig/
-% http://www.ctan.org/tex-archive/macros/latex/contrib/caption/
-%\usepackage{fixltx2e}
-% http://www.ctan.org/tex-archive/macros/latex/base/
-%\usepackage{stfloats}
-% http://www.ctan.org/tex-archive/macros/latex/contrib/sttools/
-
-% correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
 \begin{document}
 
 \title{Instrumentation For The Anodization and Characterization of Titanium Electrodes for Electrolytic Capacitors}
 
-\author{Michael~DeLibero,~\IEEEmembership{Member,~IEEE,}% <- This stops a space
+\author{Michael~DeLibero,~\IEEEmembership{Member,~IEEE,}
+       {Steven~Ehret,~\IEEEmembership{Member,~IEEE,}
+    }% <- This stops a space
+
 \thanks{M. DeLibero is a MS student at Case Western Reserve University with the Department
 of Electrical and Computer Engineering}%
 \thanks{Special Thanks give to ARPA-E,Dr. Merat, Steven Ehret}}
@@ -79,10 +63,25 @@ IEEEtran, journal, \LaTeX, paper, template.
 \IEEEpeerreviewmaketitle
 
 \section{Introduction}
+
+Citation:
+\cite{knuth84}
+\cite{tiCharHag}
+
+\IEEEPARstart{C}{apacitors} with high energy and power are essential for efficient management of electrical power.  Order of magnitude increases are desired for energy and power density. This may be possible with new self-repairing titanate dielectric capacitors using high surface area doped titanium and doped zirconium-titanium.  Anodizing at DC voltages forms a uniform dielectric film of doped titania (the energy density of this dielectric is estimated to be on the order of 150J/$cm^3$) \cite{tiSponge}. This and the volume fraction of dielectric determines the energy density of the capacitor.
+
+One of the major problems plaguing titanium electrolytic capacitors has been their high leakage currents \cite{tiCharHag}. In order to further research into titanium capacitors, custom anodization instrumentation has been developed to anodize and characterize a large number of candidate titanium capacitor materials. This instrumentation was necessary because conventional systems do not have the necessary dynamic range (1A-1nA measurement) or repeatability (need to get some kind of number) needed in this application.
+
+
+
 \IEEEPARstart{T}{itanium} capacitors are being looked at more closely as a possible alternative to tantalum capacitors due to their lower material cost and possibly better temperature characteristics (quote Welsch, intro ARPA-E meeting). In the past, titanium capacitors have not been feasible alternatives due to their high leakage currents (quote Ki’s paper). In order to further research into titanium capacitors, custom anodization instrumentation has been developed to anodize and characterize prototype titanium capacitor materials. This instrumentation was necessary because conventional systems do not have the necessary dynamic range (1A-1nA measurement) or repeatability (need to get some kind of number) needed in this application.
 
 
 \subsection{Anodization Process and Requirements}
+
+Citation!!!!!!
+\cite{knuth84}
+\cite{tiCharHag}
 
 Anodization is the act of growing an oxide layer on top of a metal anode. This is useful in capacitors because it allows a capacitor to store significantly more energy then it would have otherwise. The anodization process is preformed by immersing an anode and a cathode into an electrolyte solution and then hooking up either a voltage or current source across the sample. This process can be seen in Fig:  ~\ref{fig:anodSetup}
 
@@ -262,10 +261,9 @@ Appendix one text goes here.
 
 The authors would like to thank...
 
-ARPA-E
-Dr. Merat
-Steven Ehret
-
+ARPA-E,
+Dr. Merat,
+Steven Ehret,
 
 % Can use something like this to put references on a page
 % by themselves when using endfloat and the captionsoff option.
@@ -273,11 +271,21 @@ Steven Ehret
   \newpage
 \fi
 
+\bibliographystyle{IEEEtran}
+\bibliography{IEEEabrv,mybibfile}
 \begin{thebibliography}{1}
 
-\bibitem{IEEEhowto:kopka}
-H.~Kopka and P.~W. Daly, \emph{A Guide to \LaTeX}, 3rd~ed.\hskip 1em plus
-  0.5em minus 0.4em\relax Harlow, England: Addison-Wesley, 1999.
+\bibitem{tiCharHag} Ki, Jun-Wan and Welsch, Gerhard \emph{"(H. Hagiwara and A. Yamashita, Characteristics of Titanium Electrolytic Capacitors, Proceedings of the IEEE, October 1963)."}, Addison-Wesley, Reading,
+Massachusetts, second edition, 1984,
+
+\bibitem{tiSponge} Ki, Jun-Wan and Welsch, Gerhard \emph{"Titanium Sponge on Titanium Substrate"}, Addison-Wesley, Reading,
+Massachusetts, second edition, 1984,
+
+\bibitem{refx} Knuth, D.E. \emph{The TEXbook}, Addison-Wesley, Reading,
+Massachusetts, second edition, 1984,
+
+\bibitem{knuth84} Knuth, D.E. \emph{The TEXbook}, Addison-Wesley, Reading,
+Massachusetts, second edition, 1984,
 
 \end{thebibliography}
 

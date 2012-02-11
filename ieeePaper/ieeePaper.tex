@@ -80,15 +80,15 @@ Anodization is the act of growing an oxide layer (dielectric) on top of a metal 
 Referring to Fig. ~\ref{fig:anodSetup}, in the simplest case, the current transfer is an ionic transfer where the Ti anode reacts with $O_{2}$ to create a $TiO_{2}$ oxide layer. The reaction at the metal-oxide surface can be written as:
 
 \begin{equation}
-Ti + 02 => TiO2 + 4e
+Ti + 0_2 => TiO_2 + 4e
 \end{equation}
 The titanium also reacts with the electrolyte solution to give off hydrogen:
 \begin{equation}
-Ti + 2H20 => Ti02 + 4H+Ti02
+Ti + 2H_20 => Ti0_2 + 4H+Ti0_2
 \end{equation}
 This hydrogen reacts with the electrons at the cathode to create hydrogen gas and complete the ionic circuit.
 \begin{equation}
-4H + 4e => 2H20
+4H + 4e => 2H_20
 \end{equation}
 
 This process is very similar to anodizing aluminum. For an explanation of that process visit \cite{cwruEncAlanod}.
@@ -136,13 +136,13 @@ An ideal current source has the ability to output a constant, DC, current to any
 \end{figure}
 
 
-The current source implementation (Fig. ~\ref{fig:currentMirror}) was chosen around an op-amp based current mirror. The op-amp on the left, U4Z1C, is used to set and regulate the current through R23. This current functions as the reference current on the left leg of the current mirror. The op-amp on the right, U4Z1B, forces the voltage drop across R17 and R18 to be the same, hence causing the current in the right leg to go as:
+The current source implementation (Fig. ~\ref{fig:currentMirror}) was chosen around an op-amp based current mirror. The op-amp on the left, U4Z1C, is used to set and regulate the current through R23. This current functions as the reference current on the left leg of the current mirror. The op-amp on the right, U4Z1B, forces the voltage drop across $R_{17}$ and $R_{18}$ to be the same, hence causing the current in the right leg to go as:
 
 \begin{equation}
-I2 = I1*R18/R17
+I_2 = I_1*R_{18}/R_{17}
 \end{equation}
 
-With the values chosen in this design, this equates to a 10x current amplification from the reference to the current output. The adjustable supply voltage is applied to the node connecting resistors R17 and R18. The current source will be able supply a constant current up to an effective compliance voltage of the supply voltage minus the voltage drops of R17, the pass transistor, and the protection diode.
+With the values chosen in this design, this equates to a 10x current amplification from the reference to the current output. The adjustable supply voltage is applied to the node connecting resistors $R_{17}$ and $R_{18}$. The current source will be able supply a constant current up to an effective compliance voltage of the supply voltage minus the voltage drops of $R_{17}$, the pass transistor, and the protection diode.
 
 The real current source has several practical limitations that provide less than ideal performance. 
 
@@ -163,7 +163,7 @@ The real current source has several practical limitations that provide less than
 The safe operating area (Fig.  ~\ref{fig:safeOpArea}) is smaller than the desired operating output of 30V at 100mA. This difference comes from the limitations in the power dissipation of the pass transistor, U18Z1, in Fig. ~\ref{fig:currentMirror}. Assuming the worse case scenario of a short on the output, the allowable output current for a given voltage compliance can be found as:
 
 \begin{equation}
-Iout = Prating / Vcomp
+I_{out} = P_{rating} / V_{comp}
 \end{equation}
 
 The current source operates by controlling the gate voltage of U18Z1 in Fig. ~\ref{fig:currentMirror}) ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of (Fig. ~\ref{fig:currentMirror}) is limited by the Gain Bandwidth Product of U4X1B (1.8Mhz – reference datasheet). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
@@ -172,7 +172,7 @@ The ideal current source has the ability to output any desired current over its 
 
 
 \begin{equation}
-U = Vi_set /(2n-1) / (R23 + Rpot) *(R18/R17)
+U = Vi_set /(2n-1) / (R_{23} + R_{pot}) *(R_{18}/R_{17})
 \end{equation}
 
 
@@ -234,7 +234,7 @@ Once the data is collected onto the microcontroller, it is sent to a PC via USB 
 The experimental setup to anodize the anode of a titanium capacitor with the aforementioned circuitry is as follows. The anode sample is prepared by cleaning the surface oxide off with a chemical bath. It is then transported into a beaker of anodizing solution. The current source is connected to the DUT and acts as both a current source and data logger until the test is finished and the current through the DUT has dropped to the leakage current.
 
 \section{Experimental Results}
-Typical results from early materials can be found it Fig 7. For additional data and complete testing curves, see Steve’s thesis and my thesis.
+Typical results from early materials can be found it Fig. 7. For additional data and complete testing curves, see Steve’s thesis and my thesis.
 
 \begin{figure}[here]
 \centering
@@ -244,13 +244,15 @@ Typical results from early materials can be found it Fig 7. For additional data 
 \end{figure}
 
 % use section* for acknowledgement
-\section*{Acknowledgment}
+\section*{Acknowledgments}
 
 The author would like to thank...
 
 ARPA-E,
-Dr. Merat,
-Steven Ehret
+Steven Ehret,
+Dr. Francis Merat,
+Dr. Gerhard Welsch,
+and Donald McGervey
 
 % Can use something like this to put references on a page
 % by themselves when using endfloat and the captionsoff option.

@@ -97,7 +97,7 @@ This hydrogen reacts with the electrons at the cathode to create hydrogen gas an
 
 This process is very similar to anodizing aluminum. For an explanation of that process visit \cite{cwruEncAlanod}.
 
-Since the rate of oxide formation is dependent on the charge transport into the anode during anodization, a current source was selected. A typical anodization process with a current source will see the current and voltage progress as in (~\ref{fig:currentMirror}).
+Since the rate of oxide formation is dependent on the charge transport into the anode during anodization \cite{tiMinit}, a current source was selected. A typical anodization process with a current source will see the current and voltage progress as in Fig. ~\ref{fig:currentMirror}.
  
 
 \begin{figure}[here]
@@ -107,7 +107,9 @@ Since the rate of oxide formation is dependent on the charge transport into the 
 \label{fig:anodCurve}
 \end{figure}
 
-If a constant current is introduced, the voltage will (ideally) rise linearly with time. This will happen until the DUT reaches the compliance voltage, at which point the current through the DUT will begin to drop off until it reaches the leakage current of the unpackaged capacitor. 
+Our typical anodization tests work with a constant current of 20mA and a forming voltage of 30V. The anodization reaches the forming voltage in periods on the order of 30 seconds. The forming voltage then remains constant while the leakage current decreases over  a much longer time period (on the order of 24 hours) to currents on the order of 1 microampere or less. The exact times and values are dependent upon the material and the size of the electrode.
+
+If a constant current is introduced, the voltage will (ideally) rise linearly with time. This will happen until the DUT (Device Under Test) reaches the compliance voltage, at which point the current through the DUT will begin to drop off until it reaches the leakage current of the unpackaged capacitor. 
 
 \section{Design and Implementation of Custom System Used for Anodization}
 

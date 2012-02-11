@@ -36,28 +36,24 @@
 
 \title{Instrumentation For The Anodization and Characterization of Titanium Electrodes for Electrolytic Capacitors}
 
-\author{Michael~DeLibero,~\IEEEmembership{Member,~IEEE,}
-       {Steven~Ehret,~\IEEEmembership{Member,~IEEE,}
-    }% <- This stops a space
+\author{M. DeLibero,~\IEEEmembership{Student Member,~IEEE,}
+        S. Ehret,~\IEEEmembership{Member,~IEEE,}
+        and F. Merat,~\IEEEmembership{Senior Member,~IEEE}%
 
+\thanks{This work was supported in full by ARPA-E grant \#DE-AR0000116}
 \thanks{M. DeLibero is a MS student at Case Western Reserve University with the Department
-of Electrical and Computer Engineering}%
-\thanks{Special Thanks give to ARPA-E,Dr. Merat, Steven Ehret}}
-
-% The paper headers
-\markboth{Journal of \LaTeX\ Class Files,~Vol.~6, No.~1, January~2007}%
-{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for Journals}
+of Electrical and Computer Science.}%
+\thanks{Special Thanks given to ARPA-E,Dr. Francis Merat, Steven Ehret}}
 
 \maketitle
 
 \begin{abstract}
-%\boldmath
 This paper presents a custom circuit for controlling the anodization of titanium capacitors and characterizing their performance. The circuitry provides a constant current source of 0-100mA up to a compliance voltage of 30V. The system can monitor and record leakage currents down to 10 nA over periods of up to 24 hours. Typical results obtained using sputtered titanium-zirconium capacitors are presented.
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-%IEEEtran, journal, \LaTeX, paper, template.
+Capacitor, Switched Capacitor Circuits
 \end{IEEEkeywords}
 
 \IEEEpeerreviewmaketitle
@@ -115,7 +111,7 @@ If a constant current is introduced, the voltage will (ideally) rise linearly wi
 
 \begin{figure}[here]
 \centering
-\includegraphics[width=2.5in]{blockDiagram}
+\includegraphics[width=3.5in]{blockDiagram}
 \caption{Overall System Block Diagram}
 \label{fig:blockDiagram}
 \end{figure}
@@ -124,10 +120,9 @@ The overall system flow (Fig. ~\ref{fig:blockDiagram}) , is as follows:
 
 The user sets the test parameters of current, voltage compliance, and testing time. Then the computer sends the configuration settings to the hardware with a command to start the test. The current source then turns on and regulates to the set current until the test is finished. The system is designed to work with a passive DUT. During the duration of the test, the current and voltage senses characterize the DUT and send the data to a PC for post processing.
 
-\subsection{Computer}
+\subsection{Computer Control and Data Acquisition}
 
-The computer scripts for this setup are written in Python and are in charge of configuring the hardware for each test and logging data being sent from the board. The computer is not responsible for any real time control or system monitoring. Data is sent from the hardware at a high rate (see Current and Voltage Measurements section) and the PC subsamples this data and throws away what it does not want. In order to reduce the size of the data set long-term leakage tests (on the order of 24 hours) require data to be sampled at a slower rate after the anodization has completed.
-
+The user sets the test parameters of current, voltage compliance, and testing time. The anodization is then controlled by a set of Python scripts, which appropriately configure the hardware and control the data logging. Voltage and current measurements are sampled at a constant, high rate and all data is recorded. However, once the electrode has reached the forming voltage and the (leakage) current is slowly decreasing over time the data measurements are subsampled and only a fraction of the sampled data is preserved.  (say more on this)
 
 \subsection{Current Source}
 
@@ -135,7 +130,7 @@ An ideal current source has the ability to output a constant, DC, current to any
 
 \begin{figure}[here]
 \centering
-\includegraphics[width=2.5in]{currentMirror}
+\includegraphics[width=3.5in]{currentMirror}
 \caption{Current Control Circuitry}
 \label{fig:currentMirror}
 \end{figure}
@@ -151,10 +146,16 @@ With the values chosen in this design, this equates to a 10x current amplificati
 
 The real current source has several practical limitations that provide less than ideal performance. 
 
+\begin{enumerate}
+\item Pass transistor power rating
+\item Finite number of current settings
+\item Slight nonlinearity due to the pass diode
+\end{enumerate}
+
  
 \begin{figure}[here]
 \centering
-\includegraphics[width=2.5in]{safeOpArea}
+\includegraphics[width=3.5in]{safeOpArea}
 \caption{Current Source: Safe Operating Area}
 \label{fig:safeOpArea}
 \end{figure}
@@ -174,11 +175,12 @@ The ideal current source has the ability to output any desired current over its 
 U = Vi_set /(2n-1) / (R23 + Rpot) *(R18/R17)
 \end{equation}
 
+
 Which yields an uncertainty in the current output of +/- 0.5mA. This can be calibrated away for a single current output, but all other outputs would be off by as much as the uncertainty.
 
 Also, the protection diode, U39, in (Fig. ~\ref{fig:currentMirror}) has the effect of increasing the voltage compliance as the current drops off after anodization. Looking at a standard diode curve, the voltage drop across the diode is roughly a constant 0.7V for high currents and exponentially diminishes towards zero as the current decreases. The tests are designed to not only anodize, but also continue to measure the long-term leakage current afterwards. This means that the current draw will decrease to the nA range, causing the effective voltage compliance to increase to about a diode drop above its anodization level. This affect will need to be considered during the analysis of the anodization data.
 
------------------Add Sections on Accuracy, Precision, and Repeatability. 
+The circuitry is still being tested for emperical accuracy and repeatability, therefore that data is not yet available.
 
 \subsection{DUT}
 
@@ -192,14 +194,14 @@ The second part of the instrumentation is the measurement circuitry. An ideal me
 
 \begin{figure}[here]
 \centering
-\includegraphics[width=2.5in]{measCir}
+\includegraphics[width=3.5in]{measCir}
 \caption{Measurement Circuitry}
 \label{fig:measCir}
 \end{figure}
 
 The measurement circuitry (Fig. ~\ref{fig:measCir}) implemented consists of two different parts, voltage and current measurements. The voltage of the DUT is measured differentially by Analog Device’s AD8220 JFET instrumentation amplifier. This output is scaled and then sent to a 12-bit DAC. The current through the DUT is measure from a low side measurement topology know and a transimpedance amplifier. The amplifier creates a virtual ground at the negative terminal of the op-amp,U39, that allows for a current reading without subjecting the measurement circuitry to a high voltage and without floating the bottom of the DUT above ground.
 
-Since it is desirable the measure both the anodization current and the leakage current afterwards, a basic transimpedance amplifier design was modified to include 3 switched feedback paths. This allows the current measurement to measure currents over 8 orders of magnitude. The circuitry can handle currents from 10nA to 100mA.
+Since it is desirable the measure both the anodization current and the leakage current afterwards, a basic transimpedance amplifier design was modified to include 3 switched feedback paths. This allows the current measurement to measure currents over 8 orders of magnitude. The circuitry can handle currents from 10nA to 100mA. The three current ranges are listed Table:~\ref{tab:dacRes}.
 
 The real measurement circuitry has several practical limitations that limit it from performing ideally. Both the differential amplifier and the transimpedance amplifier send their signals to 6-pole Sallen-Key filters. These filters have a cutoff frequency of 10kHz(quote S. thesis), in order to filter out high frequency harmonics and other undesirable noise. Any signals higher than this will be severely attenuated in the captured data.
 
@@ -236,9 +238,9 @@ Typical results from early materials can be found it Fig 7. For additional data 
 
 \begin{figure}[here]
 \centering
-\includegraphics[width=2.5in]{materialResults}
+\includegraphics[width=3.5in]{measData}
 \caption{Typical Results}
-\label{fig:materialResults}
+\label{fig:measData}
 \end{figure}
 
 % use section* for acknowledgement

@@ -8,19 +8,17 @@ from xlwt import Workbook
 from xlutils import *
 from tempfile import TemporaryFile
 from collections import namedtuple
-from init.state import state_entire
-
+from state import state_entire
 
 bulkState = state_entire()
 
 template_file = 'testConfig_template.xls'
 testConfig_file = 'testConfig.xls' # Must be based from template
 
-if __name__ == "__main__":
-    create_template(template_file,bulkState.init_wrDict)
 
 def create_template(file,template):
     """ Creat a template .xls file for the test's testParam_val output."""
+    '''
     book = Workbook()
     sheet1 = book.add_sheet('test_info')
 
@@ -32,6 +30,9 @@ def create_template(file,template):
 
     book.save(file)
     book.save(TemporaryFile())
+
+if __name__ == "__main__":
+    create_template(template_file,bulkState.init_wrDict())
 
 def matches_template(file):
     """Check to see if the test Configuration file matches the template:"""
@@ -59,7 +60,7 @@ def matches_template(file):
         print "Files are compatable\n"
 
     return (allGood)    
-    
+    '''
 def check_usr_limits(file):
     """Check to see if the test's limits are below the maximums:"""
     

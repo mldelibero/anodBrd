@@ -1,6 +1,10 @@
 #! /usr/bin/env python
-from testConfig import *
+from progConfig import *
+
+
+
 '''
+from testConfig import *
 class stateClass:
 
 state = {'usrName':['User Name','Your Name',0,no_lim],

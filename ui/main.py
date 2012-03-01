@@ -1,11 +1,6 @@
 #! /usr/bin/env python
 
-import sys
-sys.path.append('./init')
-from init.progConfig  import *
-
-if __name__ == "__main__":
-    import sys
+init()
 
 #testConfig.create_template(template_file,bulkState.init_wrDict)
 

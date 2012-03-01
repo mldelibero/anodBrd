@@ -9,30 +9,30 @@ from xlutils import *
 from tempfile import TemporaryFile
 from collections import namedtuple
 from datetime import *
-from test import *
+
+from test.test import state_entire
 
 bulkState = state_entire()
 
 template_file = 'testConfig_template.xls'
 testConfig_file = 'testConfig.xls' # Must be based from template
 
-def create_template(file):
+if __name__ == "__main__":
+    create_template(template_file,bulkState.init_wrDict)
+
+def create_template(file,template):
     """ Creat a template .xls file for the test's testParam_val output."""
     book = Workbook()
     sheet1 = book.add_sheet('test_info')
 
     row = 0
-    for key in order:
-        sheet1.write(row,0,key)
-        sheet1.write(row,1,testParam[key])
+    for set in template:
+        sheet1.write(row,0,template[0])
+        sheet1.write(row,1,template[1])
         row+=1
 
     book.save(file)
     book.save(TemporaryFile())
-
-
-create_template(template_file)
-
 
 def matches_template(file):
     """Check to see if the test Configuration file matches the template:"""

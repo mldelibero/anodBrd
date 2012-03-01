@@ -3,7 +3,6 @@ from testConfig import *
 
 class stateClass:
 
-
 state = {'usrName':['User Name','Your Name',0,no_lim],
          'testDate':['Test Date',date,1,no_lim],
          'anodMat':['Anod Material','Titanium',2,no_lim],

@@ -18,14 +18,13 @@ testConfig_file = 'testConfig.xls' # Must be based from template
 
 def create_template(file,template):
     """ Creat a template .xls file for the test's testParam_val output."""
-    '''
     book = Workbook()
     sheet1 = book.add_sheet('test_info')
 
     row = 0
     for set in template:
-        sheet1.write(row,0,template[0])
-        sheet1.write(row,1,template[1])
+        sheet1.write(row,0,set[0])
+        sheet1.write(row,1,set[1])
         row+=1
 
     book.save(file)
@@ -60,7 +59,7 @@ def matches_template(file):
         print "Files are compatable\n"
 
     return (allGood)    
-    '''
+
 def check_usr_limits(file):
     """Check to see if the test's limits are below the maximums:"""
     

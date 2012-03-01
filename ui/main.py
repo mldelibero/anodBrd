@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
-init()
+from test.test import create_template_test
+create_template_test()
 
 #testConfig.create_template(template_file,bulkState.init_wrDict)
 

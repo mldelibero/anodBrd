@@ -9,27 +9,9 @@ from xlutils import *
 from tempfile import TemporaryFile
 from collections import namedtuple
 from datetime import *
+from test import *
 
-#Initialize testParam_name
-date = datetime.now().strftime("%Y-%m-%d")
-
-vol_lim = 30    # V
-cur_lim = 100   # mA
-time_lim = 1440 # min (24hrs)
-no_lim = 0
-
-#state.val = (excel name,value,excel order,limit
-state = {'usrName':['User Name','Your Name',0,no_lim],
-         'testDate':['Test Date',date,1,no_lim],
-         'anodMat':['Anod Material','Titanium',2,no_lim],
-         'elecro':['Electrolye','H3PO4',3,no_lim],
-         'ch1_vol':['Ch1 Vol(V)',0,4,vol_lim],
-         'ch1_cur':['Ch1 Cur(mA)',1,5,cur_lim],
-         'ch1_time':['Ch1 Time(min)',2,6,time_lim],
-         'ch2_vol':['Ch2 Vol(V)',3,7,vol_lim],
-         'ch2_cur':['Ch2 Cur(mA)',4,8,cur_lim],
-         'ch2_time':['Ch2 Time(min)',2,9,time_lim],
-         }
+bulkState = state_entire()
 
 template_file = 'testConfig_template.xls'
 testConfig_file = 'testConfig.xls' # Must be based from template
@@ -47,6 +29,10 @@ def create_template(file):
 
     book.save(file)
     book.save(TemporaryFile())
+
+
+create_template(template_file)
+
 
 def matches_template(file):
     """Check to see if the test Configuration file matches the template:"""

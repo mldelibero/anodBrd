@@ -1,3 +1,9 @@
 *.o
 *.*~
+
 *.pyc
+__init__.py
+
+*.aux
+*.blg
+*.bst

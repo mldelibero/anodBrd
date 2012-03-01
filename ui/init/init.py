@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 from testConfig import *
-
+'''
 class stateClass:
 
 state = {'usrName':['User Name','Your Name',0,no_lim],
@@ -38,4 +38,4 @@ def init(state_init):
         return False
     print "//---------------------------------------"
     
-
+'''

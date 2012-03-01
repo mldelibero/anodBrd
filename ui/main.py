@@ -2,12 +2,12 @@
 
 import sys
 sys.path.append('./init')
-from init.testConfig  import *
+from init.progConfig  import *
 
 if __name__ == "__main__":
     import sys
 
-testConfig.create_template(template_file,bulkState.init_wrDict)
+#testConfig.create_template(template_file,bulkState.init_wrDict)
 
 '''    
 #Run the rest of the program if the initialization is sucessful.

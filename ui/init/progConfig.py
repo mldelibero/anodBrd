@@ -8,9 +8,8 @@ from xlwt import Workbook
 from xlutils import *
 from tempfile import TemporaryFile
 from collections import namedtuple
-from datetime import *
+from init.state import state_entire
 
-from test.test import state_entire
 
 bulkState = state_entire()
 

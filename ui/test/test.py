@@ -17,6 +17,10 @@ def check_usr_limits_test():
     from init.progConfig import check_usr_limits
     check_usr_limits(testConfig_file,bulkState.listLimits())
 
+def confirm_testParameters_test():
+    from init.progConfig import confirm_testParameters
+    confirm_testParameters(testConfig_file,bulkState.listOrdKeys())
+
 if __name__ == "__main__":
     import sys
     sys.path.append('/Users/mldelibero/case/masters/anodBrd/ui')
@@ -27,5 +31,5 @@ if __name__ == "__main__":
     from init.progConfig import testConfig_file
     from init.progConfig import template_file
     
-    check_usr_limits_test()
+    confirm_testParameters_test()
 

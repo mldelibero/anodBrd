@@ -77,16 +77,16 @@ def check_usr_limits(usrFile,limits):
     else:
         return False
 
-def confirm_testParameters(usrFile):
+def confirm_testParameters(usrFile,keys):
     """ Confirm the test parameters with the user."""
     print "\nConfirming test parameters:"
-    print "Are all of the following correct?\n"
+    print "Is all of the following correct?\n"
 
     allGood = True
     book = open_workbook(usrFile)
     sheet = book.sheet_by_index(0)
-    usr_val = sheet.col_values(1,0,len(limits))
-    usr_val_name = sheet.col_values(0,0,len(limits))
+    usr_val = sheet.col_values(1,0,len(keys))
+    usr_val_name = sheet.col_values(0,0,len(keys))
 
     for row in range(len(usr_val)):
         print "%s = %s" % (usr_val_name[row],usr_val[row])

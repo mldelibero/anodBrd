@@ -106,15 +106,15 @@ def confirm_testParameters(usrFile,keys):
 
     return True
 
-def initState(file,state_inSt):
+def initState(usrFile,state_inSt,ordKeys):
     """ Initilize the state variable.
 
         state_inSt is the state variable as it exists in the initState fun
     """
 
-    book = open_workbook(file)
+    book = open_workbook(usrFile)
     sheet = book.sheet_by_index(0)
-    usr_val = sheet.col_values(1,0,len(order))
+    usr_val = sheet.col_values(1,0,len(state))
     usr_val_name = sheet.col_values(0,0,len(order))
     usr_dic = dict(zip(usr_val_name,usr_val))
 

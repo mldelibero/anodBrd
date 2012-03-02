@@ -29,22 +29,21 @@ def create_template(file,template):
     book.save(file)
     book.save(TemporaryFile())
 
-def matches_template(file):
+def matches_template(usrFile,template):
     """Check to see if the test Configuration file matches the template:"""
-    print "Checking for '%s' -> '%s' compatability" % (testConfig_file,template_file)
+    print "Checking for '%s' -> '%s' compatability" % (usrFile,template_file)
     #Test to see if the the testConfig_file exists
     try:
-        open(file)
+        open(usrFile)
     except IOError as e:
-        print "Error: File %s does not exist!" % file
-        print "Rename '%s' to '%s' and fill in your desired test testParam values.\n" % (template_file,testConfig_file)
+        print "Error: File %s does not exist!" % usrFile
         return False
 
     #Test to see if the testConfig_file matches the template
     allGood = True
-    book = open_workbook(file)
+    book = open_workbook(usrFile)
     sheet = book.sheet_by_index(0)
-    usr_val_name = sheet.col_values(0,0,len(testParam));
+    usr_val_name = sheet.col_values(0,0,len(template));
 
     for row in range(len(template)):
         if(usr_val_name[row] != template[row][0]):

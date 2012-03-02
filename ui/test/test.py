@@ -10,9 +10,9 @@ def create_template_test():
 def matches_template_test():
     from init.progConfig import matches_template
     from init.state import state_entire
-    from init.progConfig import template_file
+    from init.progConfig import testConfig_file
     bulkState = state_entire()
-    matches_template(template_file,bulkState.init_wrDict())
+    matches_template(testConfig_file,bulkState.init_wrDict())
 
 def state_test():
     """Test the modules in the state class"""

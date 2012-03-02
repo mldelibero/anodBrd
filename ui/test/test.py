@@ -1,10 +1,4 @@
 #! /usr/bin/env python
-
-from init.state import state_entire
-from init.progConfig import testConfig_file
-from init.progConfig import template_file
-
-bulkState = state_entire()
     
 def state_test():
     """Test the modules in the state class"""
@@ -21,9 +15,17 @@ def matches_template_test():
 
 def check_usr_limits_test():
     from init.progConfig import check_usr_limits
-    
+    check_usr_limits(testConfig_file,bulkState.listLimits())
 
 if __name__ == "__main__":
     import sys
     sys.path.append('/Users/mldelibero/case/masters/anodBrd/ui')
-    matches_template_test()
+
+    from init.state import state_entire
+    bulkState = state_entire()
+    
+    from init.progConfig import testConfig_file
+    from init.progConfig import template_file
+    
+    check_usr_limits_test()
+

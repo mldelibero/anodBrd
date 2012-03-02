@@ -55,20 +55,20 @@ def matches_template(usrFile,template):
 
     return (allGood)    
 
-def check_usr_limits(file):
+def check_usr_limits(usrFile,limits):
     """Check to see if the test's limits are below the maximums:"""
     
     print "Testing if test parameters are below maximums:"
 
     allGood = True
-    book = open_workbook(file)
+    book = open_workbook(usrFile)
     sheet = book.sheet_by_index(0)
-    usr_val = sheet.col_values(1,0,len(order))
-    usr_val_name = sheet.col_values(0,0,len(order))
+    usr_val = sheet.col_values(1,0,len(limits))
+    usr_val_name = sheet.col_values(0,0,len(limits))
 
-    for row in range(4,len(order)):
-        if (usr_val[row] > limits[usr_val_name[row]]):
-            print "%s : %i !< limit of %i" % (usr_val_name[row],usr_val[row],limits[usr_val_name[row]])
+    for row in range(4,len(limits)):
+        if (usr_val[row] > limits[row][1]):
+            print "%s : %i !< limit of %i" % (usr_val_name[row],usr_val[row],limits[row][1])
             allGood = False
 
     if (allGood == True):
@@ -77,20 +77,19 @@ def check_usr_limits(file):
     else:
         return False
 
-def confirm_testParameters(file):
+def confirm_testParameters(usrFile):
     """ Confirm the test parameters with the user."""
     print "\nConfirming test parameters:"
     print "Are all of the following correct?\n"
 
     allGood = True
-    book = open_workbook(file)
+    book = open_workbook(usrFile)
     sheet = book.sheet_by_index(0)
-    usr_val = sheet.col_values(1,0,len(order))
-    usr_val_name = sheet.col_values(0,0,len(order))
+    usr_val = sheet.col_values(1,0,len(limits))
+    usr_val_name = sheet.col_values(0,0,len(limits))
 
     for row in range(len(usr_val)):
         print "%s = %s" % (usr_val_name[row],usr_val[row])
-    
     
     valid = False
     while (valid == False):

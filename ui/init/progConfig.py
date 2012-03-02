@@ -15,7 +15,6 @@ bulkState = state_entire()
 template_file = 'testConfig_template.xls'
 testConfig_file = 'testConfig.xls' # Must be based from template
 
-
 def create_template(file,template):
     """ Creat a template .xls file for the test's testParam_val output."""
     book = Workbook()
@@ -29,9 +28,6 @@ def create_template(file,template):
 
     book.save(file)
     book.save(TemporaryFile())
-
-if __name__ == "__main__":
-    create_template(template_file,bulkState.init_wrDict())
 
 def matches_template(file):
     """Check to see if the test Configuration file matches the template:"""
@@ -50,9 +46,9 @@ def matches_template(file):
     sheet = book.sheet_by_index(0)
     usr_val_name = sheet.col_values(0,0,len(testParam));
 
-    for row in range(len(order)):
-        if(usr_val_name[row] != order[row]):
-            print "%s   !=  %s" % (usr_val_name[row],order[row])
+    for row in range(len(template)):
+        if(usr_val_name[row] != template[row][0]):
+            print "%s   !=  %s" % (usr_val_name[row],template[row])
             allGood = False
           
     if (allGood == True):

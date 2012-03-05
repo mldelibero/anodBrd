@@ -31,5 +31,9 @@ if __name__ == "__main__":
     from init.progConfig import testConfig_file
     from init.progConfig import template_file
     
-    confirm_testParameters_test()
+#    state_test()
+#    create_template_test()
+#    matches_template_test()
+#    check_usr_limits_test()
+#    confirm_testParameters_test()
 

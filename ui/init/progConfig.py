@@ -5,7 +5,7 @@ This file contains everything needed to inspect the user's testParam_val file fo
 
 from xlrd import open_workbook
 from xlwt import Workbook
-from xlutils import *
+#from xlutils import *
 from tempfile import TemporaryFile
 from collections import namedtuple
 from state import state_entire

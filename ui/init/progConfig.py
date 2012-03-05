@@ -140,3 +140,31 @@ def checkUsr(state_checkUsr):
     else:
         return False
 
+
+def createState(usrFile):
+    """ Create and initialize state to be used by program."""
+    """ usrFile -- should contain the user's configurations.
+    Make sure to run matches_template, check_usr_limits, and confirm_testParameters on usrFile before running this function."""
+    from time import time
+    stateP = bulkState.progState
+    stateP['stTime'] = time() # Get time is (s) since epoch
+    
+
+    book = open_workbook(usrFile)
+    sheet = book.sheet_by_index(0)
+    usr_val = sheet.col_values(1,0,len(bulkState.state.keys()))
+    usr_val_name = sheet.col_values(0,0,len(bulkState.state.keys()))
+    usr_dic = dict(zip(usr_val_name,usr_val))
+   
+    for key in stateP.keys():
+        try:
+            stateP[key] = usr_dic[bulkState.state[key][0]]
+        except KeyError as e:
+            a = 1
+
+    if stateP['ch1_time'] > 0:
+        stateP['ch1_on'] = 1
+    if stateP['ch2_time'] > 0:
+        stateP['ch2_on'] = 1
+
+    return stateP

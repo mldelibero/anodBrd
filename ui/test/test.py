@@ -20,6 +20,11 @@ def check_usr_limits_test():
 def confirm_testParameters_test():
     from init.progConfig import confirm_testParameters
     confirm_testParameters(testConfig_file,bulkState.listOrdKeys())
+    
+def createState_test():
+    stateP = createState(testConfig_file)
+    for key in stateP.keys():
+        print key, stateP[key]
 
 if __name__ == "__main__":
     import sys
@@ -30,10 +35,12 @@ if __name__ == "__main__":
     
     from init.progConfig import testConfig_file
     from init.progConfig import template_file
+    from init.progConfig import createState
     
 #    state_test()
 #    create_template_test()
 #    matches_template_test()
 #    check_usr_limits_test()
 #    confirm_testParameters_test()
+    createState_test()
 

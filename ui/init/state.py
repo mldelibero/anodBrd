@@ -23,6 +23,17 @@ class state_entire:
                 'ch2_cur':['Ch2 Cur(mA)',4,        8,absLim['cur']],
                 'ch2_time':['Ch2 Time(min)',2,     9,absLim['time']],
                 }
+        self.progState = {
+                'stTime':0,
+                'ch1_vol':30,
+                'ch1_cur':100,
+                'ch1_time':10,
+                'ch1_on':0,
+                'ch2_vol':30,
+                'ch2_cur':100,
+                'ch2_time':10,
+                'ch2_on':0,
+                }
 
     def init_rwrKeys(self):
         """ Ordered list of keys to write for init Excel doc  """
@@ -37,3 +48,8 @@ class state_entire:
     def listOrdKeys(self):
         """ List the dictionary keys in the correct order."""
         return self.init_rwrKeys()
+    def getState(self):
+        """ Return the initialized state used by the program."""
+        """ The user file should already be populated and checked."""
+        print self.state.keys()
+

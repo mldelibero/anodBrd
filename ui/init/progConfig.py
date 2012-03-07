@@ -15,8 +15,12 @@ bulkState = state_entire()
 template_file = 'testConfig_template.xls'
 testConfig_file = 'testConfig.xls' # Must be based from template
 
-def create_template(file,template):
-    """ Creat a template .xls file for the test's testParam_val output."""
+def create_template(templFile,template):
+    """ Creat a template .xls file for the test's testParam_val output
+    templFile -> filename to save the template
+    template -> ordered list of Name, value to write in the templFile
+    """
+
     book = Workbook()
     sheet1 = book.add_sheet('test_info')
 
@@ -26,7 +30,7 @@ def create_template(file,template):
         sheet1.write(row,1,set[1])
         row+=1
 
-    book.save(file)
+    book.save(templFile)
     book.save(TemporaryFile())
 
 def matches_template(usrFile,template):
@@ -51,7 +55,7 @@ def matches_template(usrFile,template):
             allGood = False
           
     if (allGood == True):
-        print "Files are compatable\n"
+        print "-->Files are compatable\n"
 
     return (allGood)    
 
@@ -72,7 +76,7 @@ def check_usr_limits(usrFile,limits):
             allGood = False
 
     if (allGood == True):
-        print "Parameters are below maximums"
+        print "-->Parameters are below maximums"
         return allGood
     else:
         return False
@@ -98,48 +102,13 @@ def confirm_testParameters(usrFile,keys):
         if ((ans == 'y') or (ans == 'Y')):
             valid = True
         elif ((ans == 'n') or (ans == 'N')):
-            print "Fix your parameters in %s and run this script again." % (template_file)
+            print "\nFix your parameters in %s and run this script again." % (usrFile)
             valid = True
             return False
         else:
             print "Invalid Answer"
 
     return True
-
-def initState(usrFile,state_inSt,ordKeys):
-    """ Initilize the state variable.
-
-        state_inSt is the state variable as it exists in the initState fun
-    """
-
-    book = open_workbook(usrFile)
-    sheet = book.sheet_by_index(0)
-    usr_val = sheet.col_values(1,0,len(state))
-    usr_val_name = sheet.col_values(0,0,len(order))
-    usr_dic = dict(zip(usr_val_name,usr_val))
-
-    print usr_dic[ch1_vol]
-    print type(usr_dic[ch1_vol])
-    print type(state_inSt.ch1_vol)
-
-    #state_inSt = state_inSt._replace(ch1_vol=usr_dic[ch1_vol],ch1_cur = usr_dic[ch1_cur],ch1_time = usr_dic[ch1_time],ch2_vol = usr_dic[ch2_vol],ch2_time = usr_dic[)
-
-    print state_inSt
-    return state_inSt
-
-def checkUsr(state_checkUsr):
-    """Check that the test configuration file is properly formatted with sensible parameters.
-        state_checkUsr is the state variable as it exists in the checkUsr fun.
-    """
-
-    create_template(template_file)#OverWr old templates is desired
-#    if (matches_template(testConfig_file) and check_usr_limits(testConfig_file) and confirm_testParameters(testConfig_file)):
-    if (matches_template(testConfig_file) and check_usr_limits(testConfig_file)):
-        state_checkUsr = initState(testConfig_file,state_checkUsr)
-        return state_checkUsr
-    else:
-        return False
-
 
 def createState(usrFile):
     """ Create and initialize state to be used by program."""
@@ -148,7 +117,6 @@ def createState(usrFile):
     from time import time
     stateP = bulkState.progState
     stateP['stTime'] = time() # Get time is (s) since epoch
-    
 
     book = open_workbook(usrFile)
     sheet = book.sheet_by_index(0)
@@ -168,3 +136,28 @@ def createState(usrFile):
         stateP['ch2_on'] = 1
 
     return stateP
+
+def checkUsrParams(usrFile,state_checkUsr):
+    """Check that the test configuration file is properly formatted with sensible parameters.
+        state_checkUsr is the state variable as it exists in the checkUsr fun.
+    """
+    '''
+    create_template()
+    matches_template()
+    check_usr_limits()
+    confirm_testParameters()
+    '''
+   
+    create_template(template_file,bulkState.init_wrDict())
+
+    if (matches_template(usrFile,bulkState.init_wrDict())):
+        if (check_usr_limits(usrFile,bulkState.listLimits())):
+            if (confirm_testParameters(usrFile,bulkState.listOrdKeys())):
+                return True
+            else:
+                return False
+        else:
+            return False
+    else:
+        return False
+

@@ -26,6 +26,12 @@ def createState_test():
     for key in stateP.keys():
         print key, stateP[key]
 
+def checkUsrParams_test():
+    if (checkUsrParams(testConfig_file,bulkState)):
+        print "--> All Parameters OK and accepted"
+    else:
+        print "ERROR"
+
 if __name__ == "__main__":
     import sys
     sys.path.append('/Users/mldelibero/case/masters/anodBrd/ui')
@@ -36,11 +42,12 @@ if __name__ == "__main__":
     from init.progConfig import testConfig_file
     from init.progConfig import template_file
     from init.progConfig import createState
+    from init.progConfig import checkUsrParams
     
 #    state_test()
 #    create_template_test()
 #    matches_template_test()
 #    check_usr_limits_test()
 #    confirm_testParameters_test()
-    createState_test()
-
+#    createState_test()
+    checkUsrParams_test()

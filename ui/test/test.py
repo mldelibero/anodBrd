@@ -32,6 +32,9 @@ def checkUsrParams_test():
     else:
         print "ERROR"
 
+def init_test():
+    print init()
+
 if __name__ == "__main__":
     import sys
     sys.path.append('/Users/mldelibero/case/masters/anodBrd/ui')
@@ -43,6 +46,7 @@ if __name__ == "__main__":
     from init.progConfig import template_file
     from init.progConfig import createState
     from init.progConfig import checkUsrParams
+    from init.init import init
     
 #    state_test()
 #    create_template_test()
@@ -50,4 +54,5 @@ if __name__ == "__main__":
 #    check_usr_limits_test()
 #    confirm_testParameters_test()
 #    createState_test()
-    checkUsrParams_test()
+#    checkUsrParams_test()
+    init_test()

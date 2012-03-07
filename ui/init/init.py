@@ -1,14 +1,12 @@
 #! /usr/bin/env python
-from progConfig import *
 from state import state_entire
-
+from progConfig import checkUsrParams
+from progConfig import testConfig_file
+from progConfig import checkUsrParams
+from progConfig import createState
 verbState = state_entire;
 
-
-if __name__ == "__main__":
-    init();
-
-def init(state_init):
+def init():
     """ Initialize program files before running loop.py.
         
         state_init -- The state variable as it exists in the init fun
@@ -19,15 +17,15 @@ def init(state_init):
     
     print "Checking User/Test configurations:\n"
 
-    state_init = checkUsr(state_init)
-
-    if(state_init != False):
+    if (checkUsrParams(testConfig_file,verbState)):
         print "\n//---------------------------------------"
         print "Initialization Sucessful"
         print "//---------------------------------------"
-        return state_init
+        return (createState(testConfig_file))
     else:
         print "Error: Initialization Failed!"
         return False
     print "//---------------------------------------"
     
+if __name__ == "__main__":
+    init();

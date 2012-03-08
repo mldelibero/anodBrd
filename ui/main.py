@@ -6,12 +6,11 @@ from init.state import state_entire
 
 print "Anod Board UI program running..."
 state = state_entire().progState
-state = init()
+#state = init()
 if (state == False):
     print "Erorr: main.py did not recieve state from init.py"
 else:
-    a = 1
-    #loop()
+    loop(state)
 
 
 '''

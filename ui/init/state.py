@@ -27,12 +27,12 @@ class state_entire:
                 'stTime':0,
                 'ch1_vol':30,
                 'ch1_cur':100,
-                'ch1_time':10,
-                'ch1_on':0,
+                'ch1_time':2,
+                'ch1_on':1,
                 'ch2_vol':30,
                 'ch2_cur':100,
-                'ch2_time':10,
-                'ch2_on':0,
+                'ch2_time':1,
+                'ch2_on':1,
                 }
 
     def init_rwrKeys(self):

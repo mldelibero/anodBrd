@@ -6,17 +6,17 @@ from init.state import state_entire
 
 print "Anod Board UI program running..."
 state = state_entire().progState
-print "State = ",state
+state = init()
+if (state == False):
+    print "Erorr: main.py did not recieve state from init.py"
+else:
+    a = 1
+    #loop()
 
-state = init()
-print "Initialized state = ",state
-'''
-state = state_entire.get_state()
-state = init()
-print state
-'''
+
 '''
 if (state != False):
 #    loop(state)
     postProcess()
-    '''
+'''
+

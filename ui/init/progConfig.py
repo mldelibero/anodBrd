@@ -130,6 +130,9 @@ def createState(usrFile):
         except KeyError as e:
             a = 1
 
+    stateP['ch1_time']*=60
+    stateP['ch2_time']*=60
+
     if stateP['ch1_time'] > 0:
         stateP['ch1_on'] = 1
     if stateP['ch2_time'] > 0:

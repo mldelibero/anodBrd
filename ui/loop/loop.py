@@ -1,4 +1,5 @@
 #! /usr/bin/env python
+from time import time
 
 def loop(state_loop):
     """ Run the main loop.
@@ -21,36 +22,59 @@ def loop(state_loop):
     print "//---------------------------------------"
 
     if (state_loop['ch1_on'] == 1):
-        print "ch1 running for %s minutes" % (state_loop['ch1_time'])
+        print "ch1 running for %s minutes" % (state_loop['ch1_time']/60)
     else:
         print "ch1 --> OFF"
     if (state_loop['ch2_on'] == 1):
-        print "ch2 running for %s minutes" % (state_loop['ch2_time'])
+        print "ch2 running for %s minutes" % (state_loop['ch2_time']/60)
     else:
         print "ch2 --> OFF"
 
-    chkTime(state_loop)
-    getData()
-    formData()
-    chkErr()
-    beat()
-    sleep()
+    state_loop['stTime'] = time()
+    while (state_loop['ch1_on'] or state_loop['ch2_on']):
+        chkTime(state_loop)
+        getData()
+        formData()
+        chkErr()
+        beat()
+        sleep()
 
     print "\n//---------------------------------------"
     print "Main Loop Done"
     print "//---------------------------------------"
 
-def chkTime(state_time):
+def chkTime(state_loop):
     """Check the time and end test if the are past their time limits."""
-    print state_time['ch1_time']
-    print state_time['ch2_time']
+    curTime = time()
+    diff= curTime-state_loop['stTime']
+    print diff
+#    print state_loop['ch1_time']
+#    print state_loop['ch2_time']
+
+    if (diff > state_loop['ch1_time']):
+        if (state_loop['ch1_on'] == 1):
+            state_loop['ch1_on'] = 0
+            print "Turning off Channel 1"
+        
+    if (diff > state_loop['ch2_time']):
+        if (state_loop['ch2_on'] == 1):
+            state_loop['ch2_on'] = 0
+            print "Turning off Channel 2"
+    #print state_time['ch1_time']
+    #print state_time['ch2_time']
+
 def getData():
-    print "getting Data"
+    """Retrieve data from the serial port"""
+    #print "getting Data"
 def formData():
-    print "formatting Data"
+    """format data gotten from getData()"""
+    #print "formatting Data"
 def chkErr():
-    print "Checking for errors"
+    """Check for errors in data"""
+    #print "Checking for errors"
 def beat():
-    print "Output Heartbeat"
+    """Output heartbeat at a frequency"""
+    #print "Output Heartbeat"
 def sleep():
-    print "sleeping for a bit"
+    """Sleep for the remaining loop time"""
+    #print "sleeping for a bit"

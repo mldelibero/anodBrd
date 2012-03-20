@@ -182,9 +182,9 @@ void adc_test(void) {
 void test() {
 	testing_flags.leds			= 0;
 	testing_flags.clk			= 0;
-	testing_flags.usart			= 0;
+	testing_flags.usart			= 1;
 	testing_flags.usart_rx_msg  = 0;
-	testing_flags.dac			= 1;
+	testing_flags.dac			= 0;
 	testing_flags.spi_init		= 0;
 	testing_flags.adc			= 0;
 	testing_flags.adc_off		= 0;

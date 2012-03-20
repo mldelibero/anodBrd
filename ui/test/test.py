@@ -35,6 +35,10 @@ def checkUsrParams_test():
 def init_test():
     print init()
 
+def loop_getDate__test():
+    print "Recieving data\n"
+    getData()
+
 if __name__ == "__main__":
     import sys
     sys.path.append('/Users/mldelibero/case/masters/anodBrd/ui')
@@ -47,6 +51,8 @@ if __name__ == "__main__":
     from init.progConfig import createState
     from init.progConfig import checkUsrParams
     from init.init import init
+
+    from loop.loop import getData
     
 #    state_test()
 #    create_template_test()
@@ -55,4 +61,5 @@ if __name__ == "__main__":
 #    confirm_testParameters_test()
 #    createState_test()
 #    checkUsrParams_test()
-    init_test()
+#    init_test()
+    loop_getDate__test()

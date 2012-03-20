@@ -1,5 +1,11 @@
 #! /usr/bin/env python
 from time import time
+import serial
+
+dev = '/dev/tty.usbserial-000013FD'
+baud = 2000000
+tout = 1
+ser = serial.Serial(dev,baud,timeout=tout)
 
 def loop(state_loop):
     """ Run the main loop.
@@ -66,6 +72,15 @@ def chkTime(state_loop):
 def getData():
     """Retrieve data from the serial port"""
     #print "getting Data"
+    for a in range(101):
+        y = ser.read(1)
+        print "0x{0:x}".format(ord(y))
+        y = ser.read(1)
+        print "0x{0:x}".format(ord(y))
+        y = ser.read(1)
+        print "0x{0:x}".format(ord(y))
+        print 83
+    ser.close()
 def formData():
     """format data gotten from getData()"""
     #print "formatting Data"

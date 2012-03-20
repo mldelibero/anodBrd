@@ -1,4 +1,4 @@
-/*
+*
 	File:          usart.c
 	Author:        Michael DeLibero
 	Date Created:  11-02-11

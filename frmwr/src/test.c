@@ -70,10 +70,8 @@ void usart_test(void) {
 }
 		
 void usartTx_test(void) {		
-	USARTF0.DATA = 0x7E
+	USARTF0.DATA = 0x7E;
 } // end	usartTx_test()
-	
-
 
 void usartRx_test(void) {
 	rxByte = USARTF0.DATA;	

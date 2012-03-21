@@ -13,10 +13,10 @@
 #include "avr_compiler.h"
 #include "clksys_driver.h"
 #include "init.h"
-#include "usart.h"
 #include "spi.h"
-#include "dac.h"
+#include "usart.h"
 #include "adc.h"
+#include "dac.h"
 #include "loop.h"
 //-----------------------------------------------------------------------------
 //file scope defines
@@ -27,18 +27,17 @@
 //-----------------------------------------------------------------------------
 // file defined, global scope variables
 //-----------------------------------------------------------------------------
-	//These port defs will allow you to acces the individual bits of the ports.
-	//The bits will be referenced in macros throughout this project.
+//These port defs will allow you to acces the individual bits of the ports.
+//The bits will be referenced in macros throughout this project.
 volatile port_t *MYPORTC = (&PORTC.OUT);
 volatile port_t *MYPORTD = (&PORTD.OUT);
 volatile port_t *MYPORTE = (&PORTE.OUT);
 volatile port_t *MYPORTF = (&PORTF.OUT);
-	//This contains all the data needed to know the complete state of each ch.
+//This contains all the data needed to know the complete state of each ch.
 volatile channel_t ch[4];
-	// error flags for the entire program.
+// error flags for the entire program.
 volatile eflags_t eflags;
 volatile sflags_t sflags;
-
 //-----------------------------------------------------------------------------
 // variable externs
 //-----------------------------------------------------------------------------
@@ -51,6 +50,7 @@ volatile sflags_t sflags;
 // functions
 //-----------------------------------------------------------------------------
 void flag_init(void) {
+    // unset all of the flags used in the program.
 	eflags.setEventSource = 0;
 	eflags.usartRx.rxlen  = 0;
 	eflags.usartRx.badSta = 0;
@@ -64,8 +64,10 @@ void flag_init(void) {
 	sflags.norm = 0;
 	sflags.hys = 0;
 } // end flag_init()
+
 //-----------------------------------------------------------------------------
 void port_init(void) {
+    // Initialize the port io settings
 	PORTA.DIRCLR = 0xFF; // Set ADC pins as inputs
 	PORTB.DIRCLR = 0XFF; // Set ADC pins as inputs
 	
@@ -75,6 +77,7 @@ void port_init(void) {
     PORTF.DIRSET |= 0b11111011;
     PORTF.DIRCLR = PIN2_bm; // except usart Tx pin as an input.
 } // end	port_init()
+
 //-----------------------------------------------------------------------------
 void chan_init(void) {
 	
@@ -183,8 +186,8 @@ void init(void) {
 	spi_init();
 	usart_init();
 	adc_init();
-	loop_init();
-	powerCurve_init();
+    loop_init();
+//	powerCurve_init();
 
 	sei();
 	dac_init(); // SPI uses an interrupt so it must come after here.

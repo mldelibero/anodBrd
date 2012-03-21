@@ -13,7 +13,6 @@
 #include <avr/io.h>
 #include "spi.h"
 #include "spi_driver.h"
-
 //-----------------------------------------------------------------------------
 //file scope defines
 //-----------------------------------------------------------------------------
@@ -37,16 +36,18 @@ SPI_Master_t spiMasterC; // Set up SPI on port C as master for DACs.
 // functions
 //-----------------------------------------------------------------------------
 void spi_init(void) {
-	/* Initialize SPI master on port C. */
+    // Initialize SPI master on port C.
 	SPI_MasterInit(&spiMasterC, &SPIC, &PORTC, false, SPI_MODE_0_gc, \
 	               SPI_INTLVL_HI_gc, false, SPI_PRESCALER_DIV4_gc);
 }
 //-----------------------------------------------------------------------------
 // ISRs
 //-----------------------------------------------------------------------------
+/*
 ISR(SPIC_INT_vect)
 {
 	SPI_MasterInterruptHandler(&spiMasterC);
 }
+*/
 //-----------------------------------------------------------------------------
 // eof

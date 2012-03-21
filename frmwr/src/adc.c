@@ -161,6 +161,7 @@ void adc_init(void) {
 //-----------------------------------------------------------------------------
 // ISRs
 //-----------------------------------------------------------------------------
+
 ISR(ADCA_CH1_vect) {
 	if ((testing_flags.adc_off == 0) && (testing_flags.usart_rx_msg == 0)) {
 		ch[ch1].volfadc_u.all = ADCA_CH0RES - offset_A;

@@ -138,6 +138,15 @@ def createState(usrFile):
     if stateP['ch2_time'] > 0:
         stateP['ch2_on'] = 1
 
+    
+    print "Select Run Mode:\n"
+    print "[%i] Normal" % bulkState.runMode['normal']
+    print "[%i] Spoofed" % bulkState.runMode['spoofBrd']
+    print "[%i] Calibration" % bulkState.runMode['calib']
+
+    ans = raw_input('')
+
+    bulkState.progState['runmode'] = ans
     return stateP
 
 def checkUsrParams(usrFile,state_checkUsr):

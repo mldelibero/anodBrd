@@ -9,6 +9,11 @@ class state_entire:
 
         #{V,mA,min,NA}
         absLim = {'vol':30,'cur':100,'time':1440,'no':-1}
+        
+        self.runMode = {'normal':1, #Normal operation w/ brd attached
+                   'spoofBrd':2, #spoofed operation wo brd
+                   'calib':3 #calibrating brd
+                  }
 
         # key:[printed title, value, printed order, max allowed value]
         self.state = {
@@ -24,6 +29,7 @@ class state_entire:
                 'ch2_time':['Ch2 Time(min)',2,     9,absLim['time']],
                 }
         self.progState = {
+                'runmode':self.runMode['normal'],
                 'stTime':0,
                 'ch1_vol':30,
                 'ch1_cur':100,
@@ -53,3 +59,5 @@ class state_entire:
         """ The user file should already be populated and checked."""
         print self.state.keys()
 
+if __name__=='__main':
+    st = state()

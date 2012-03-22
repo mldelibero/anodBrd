@@ -1,16 +1,14 @@
 #! /usr/bin/env python
 from time import time
 import serial
+from init.state import state_entire
+from loop.spoof import commprot
 
-dev = '/dev/tty.usbserial-000013FD'
-baud = 2000000
-tout = 1
-ser = serial.Serial(dev,baud,timeout=tout)
 
-def loop(state_loop):
+def loop(state):
     """ Run the main loop.
 
-        state_loop is the state variable as it exists in the loop fun.
+        state is the state variable as it exists in the loop fun.
 
     This consists of:
 
@@ -22,23 +20,29 @@ def loop(state_loop):
         6. Display Data if necessary
         7. sleep
     """
+
+    runModes = state_entire.runMode
     
     print "\n//---------------------------------------"
     print "Starting Main Loop"
     print "//---------------------------------------"
 
-    if (state_loop['ch1_on'] == 1):
-        print "ch1 running for %s minutes" % (state_loop['ch1_time']/60)
+    if (state['ch1_on'] == 1):
+        print "ch1 running for %s minutes" % (state['ch1_time']/60)
     else:
         print "ch1 --> OFF"
-    if (state_loop['ch2_on'] == 1):
-        print "ch2 running for %s minutes" % (state_loop['ch2_time']/60)
+    if (state['ch2_on'] == 1):
+        print "ch2 running for %s minutes" % (state['ch2_time']/60)
     else:
         print "ch2 --> OFF"
 
-    state_loop['stTime'] = time()
-    while (state_loop['ch1_on'] or state_loop['ch2_on']):
-        chkTime(state_loop)
+    state['stTime'] = time()
+
+    ser = loop_init(state)
+    protocol = commprot()
+
+    while (state['ch1_on'] or state['ch2_on']):
+        chkTime(state)
         getData()
         formData()
         chkErr()
@@ -48,41 +52,52 @@ def loop(state_loop):
     print "\n//---------------------------------------"
     print "Main Loop Done"
     print "//---------------------------------------"
+def loop_init(state):
+    if state.progState['runMode'] == state.runMode['spoofBrd']:
+        ser = 0
+    else:
+        dev = '/dev/tty.usbserial-000013FD'
+        baud = 2000000
+        tout = 1
+        ser = serial.Serial(dev,baud,timeout=tout)
 
-def chkTime(state_loop):
+    return ser
+
+def chkTime(state):
     """Check the time and end test if the are past their time limits."""
     curTime = time()
-    diff= curTime-state_loop['stTime']
+    diff= curTime-state['stTime']
     print diff
-#    print state_loop['ch1_time']
-#    print state_loop['ch2_time']
 
-    if (diff > state_loop['ch1_time']):
-        if (state_loop['ch1_on'] == 1):
-            state_loop['ch1_on'] = 0
+    if (diff > state['ch1_time']):
+        if (state['ch1_on'] == 1):
+            state['ch1_on'] = 0
             print "Turning off Channel 1"
         
-    if (diff > state_loop['ch2_time']):
-        if (state_loop['ch2_on'] == 1):
-            state_loop['ch2_on'] = 0
+    if (diff > state['ch2_time']):
+        if (state['ch2_on'] == 1):
+            state['ch2_on'] = 0
             print "Turning off Channel 2"
-    #print state_time['ch1_time']
-    #print state_time['ch2_time']
 
-def getData():
+def getData(state,modes,protocol):
     """Retrieve data from the serial port"""
-    #print "getting Data"
-    for a in range(101):
-        y = ser.read(1)
-        print "0x{0:x}".format(ord(y))
-        y = ser.read(1)
-        print "0x{0:x}".format(ord(y))
-        y = ser.read(1)
-        print "0x{0:x}".format(ord(y))
-        print 83
-    ser.close()
+    
+    if state['runMode'] == modes['spoofBrd']:
+        msgIn = protocol.get2PCmsg() # get spoofed message
+
+    else:
+        for a in range(101):
+            y = ser.read(1)
+            print "0x{0:x}".format(ord(y))
+            y = ser.read(1)
+            print "0x{0:x}".format(ord(y))
+            y = ser.read(1)
+            print "0x{0:x}".format(ord(y))
+            print 83
+        ser.close()
+
 def formData():
-    """format data gotten from getData()"""
+   """format data gotten from getData()"""
     #print "formatting Data"
 def chkErr():
     """Check for errors in data"""

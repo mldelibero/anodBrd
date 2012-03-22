@@ -119,7 +119,7 @@ def chkErr():
 def wrData(data,file):
     """Write data to the file"""
     for d in data:
-        file.write(str(d))
+        file.write(str(d) + ",")
     file.write("\n")
 def beat():
     """Output heartbeat at a frequency"""

@@ -11,8 +11,8 @@ class state_entire:
         absLim = {'vol':30,'cur':100,'time':1440,'no':-1}
         
         self.runMode = {'normal':1, #Normal operation w/ brd attached
-                   'spoofBrd':2, #spoofed operation wo brd
-                   'calib':3 #calibrating brd
+                        'spoofBrd':2, #spoofed operation wo brd
+                        'calib':3 #calibrating brd
                   }
 
         # key:[printed title, value, printed order, max allowed value]
@@ -29,7 +29,7 @@ class state_entire:
                 'ch2_time':['Ch2 Time(min)',2,     9,absLim['time']],
                 }
         self.progState = {
-                'runmode':self.runMode['normal'],
+                'runMode':self.runMode['normal'],
                 'stTime':0,
                 'ch1_vol':30,
                 'ch1_cur':100,

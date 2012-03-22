@@ -146,7 +146,7 @@ def createState(usrFile):
 
     ans = raw_input('')
 
-    bulkState.progState['runmode'] = ans
+    bulkState.progState['runMode'] = int(ans)
     return stateP
 
 def checkUsrParams(usrFile,state_checkUsr):

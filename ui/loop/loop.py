@@ -2,7 +2,7 @@
 from time import time
 import serial
 from init.state import state_entire
-from loop.spoof import commprot
+from spoof import commprot
 
 
 def loop(state):
@@ -21,7 +21,7 @@ def loop(state):
         7. sleep
     """
 
-    runModes = state_entire.runMode
+    runModes = state_entire().runMode
     
     print "\n//---------------------------------------"
     print "Starting Main Loop"
@@ -36,14 +36,16 @@ def loop(state):
     else:
         print "ch2 --> OFF"
 
+    print "state in beginning of loop:\n"
+    print state
     state['stTime'] = time()
 
-    ser = loop_init(state)
+    ser = loop_init(state,runModes)
     protocol = commprot()
 
     while (state['ch1_on'] or state['ch2_on']):
         chkTime(state)
-        getData()
+        getData(state,runModes,protocol)
         formData()
         chkErr()
         beat()
@@ -52,10 +54,17 @@ def loop(state):
     print "\n//---------------------------------------"
     print "Main Loop Done"
     print "//---------------------------------------"
-def loop_init(state):
-    if state.progState['runMode'] == state.runMode['spoofBrd']:
+def loop_init(state,modes):
+    print state['runMode']
+    print modes['spoofBrd']
+    print "comparing"
+    print (state['runMode'] == modes['spoofBrd'])
+
+    if (state['runMode'] == modes['spoofBrd']):
+        print "spoofing"
         ser = 0
     else:
+        print "notspoofing"
         dev = '/dev/tty.usbserial-000013FD'
         baud = 2000000
         tout = 1
@@ -79,11 +88,11 @@ def chkTime(state):
             state['ch2_on'] = 0
             print "Turning off Channel 2"
 
-def getData(state,modes,protocol):
+def getData(state,modes,prot):
     """Retrieve data from the serial port"""
     
     if state['runMode'] == modes['spoofBrd']:
-        msgIn = protocol.get2PCmsg() # get spoofed message
+        msgIn = prot.get2PCmsg() # get spoofed message
 
     else:
         for a in range(101):

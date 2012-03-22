@@ -21,7 +21,10 @@ def init():
         print "\n//---------------------------------------"
         print "Initialization Sucessful"
         print "//---------------------------------------"
-        return (createState(testConfig_file))
+        state = (createState(testConfig_file))
+        print "state at end of init\n"
+        print state
+        return state 
     else:
         print "Error: Initialization Failed!"
         return False

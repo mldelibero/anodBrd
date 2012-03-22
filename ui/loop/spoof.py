@@ -31,17 +31,16 @@ class commprot():
        self.ch4cur = 0
 
        self.stopByte = 0x68
-       
-    def get2PCmsg(self):
+   def get2PCmsg(self):
         """Return the formatted message that goes to the PC"""
         msg2PC = []
-        msg2PC.append(startByte)
-        msg2PC.append(chEnSz)
-        msg2PC.append(ch1vol)
-        msg2PC.append(ch1cur)
-        msg2PC.append(ch2vol)
-        msg2PC.append(ch2cur)
-        msg2PC.append(stopByte)
+        msg2PC.append(self.startByte)
+        msg2PC.append(self.chEnSz)
+        msg2PC.append(self.ch1vol)
+        msg2PC.append(self.ch1cur)
+        msg2PC.append(self.ch2vol)
+        msg2PC.append(self.ch2cur)
+        msg2PC.append(self.stopByte)
 
 def spoofInit(state):
     """Initiliaze all variables in spoofInit"""

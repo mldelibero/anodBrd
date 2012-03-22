@@ -139,12 +139,23 @@ def createState(usrFile):
         stateP['ch2_on'] = 1
 
     
-    print "Select Run Mode:\n"
-    print "[%i] Normal" % bulkState.runMode['normal']
-    print "[%i] Spoofed" % bulkState.runMode['spoofBrd']
-    print "[%i] Calibration" % bulkState.runMode['calib']
+    norm = int(bulkState.runMode['normal'])
+    spoof = int(bulkState.runMode['spoofBrd'])
+    calib = int(bulkState.runMode['calib'])
+            
+    valid = False
+    while (valid == False):
+        print "Select Run Mode:\n"
+        print "[%i] Normal" % norm
+        print "[%i] Spoofed" % spoof
+        print "[%i] Calibration" % calib
 
-    ans = raw_input('')
+        ans = int(raw_input(''))
+
+        if ((ans == norm) or (ans == spoof) or (ans == calib)):
+            valid = True
+        else:
+            print "Invalid Selection!\n"
 
     bulkState.progState['runMode'] = int(ans)
     return stateP

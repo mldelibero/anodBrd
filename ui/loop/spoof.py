@@ -42,6 +42,8 @@ class commprot():
         msg2PC.append(self.ch2cur)
         msg2PC.append(self.stopByte)
 
+        return msg2PC
+
 def spoofInit(state):
     """Initiliaze all variables in spoofInit"""
     brdState = commprot()

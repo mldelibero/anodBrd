@@ -7,8 +7,6 @@ from init.state import state_entire
 print "Anod Board UI program running..."
 state = state_entire().progState
 state = init()
-print "state from init\n"
-print state
 if (state == False):
     print "Erorr: main.py did not recieve state from init.py"
 else:

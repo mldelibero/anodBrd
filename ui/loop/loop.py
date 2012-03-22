@@ -3,7 +3,8 @@ from time import time
 import serial
 from init.state import state_entire
 from spoof import commprot
-
+from datetime import datetime
+import os
 
 def loop(state):
     """ Run the main loop.
@@ -36,47 +37,54 @@ def loop(state):
     else:
         print "ch2 --> OFF"
 
-    print "state in beginning of loop:\n"
-    print state
     state['stTime'] = time()
 
-    ser = loop_init(state,runModes)
+    linit = loop_init(state,runModes)
+    ser = linit[0]
+    wrFile = linit[1]
+
     protocol = commprot()
 
     while (state['ch1_on'] or state['ch2_on']):
         chkTime(state)
-        getData(state,runModes,protocol)
-        formData()
+        data = getData(state,runModes,protocol,ser)
+        forData = formData(data)
         chkErr()
+        wrData(forData,wrFile)
         beat()
         sleep()
 
+    if state['runMode'] != runModes['spoofBrd']:
+        ser.close()
     print "\n//---------------------------------------"
     print "Main Loop Done"
     print "//---------------------------------------"
 def loop_init(state,modes):
-    print state['runMode']
-    print modes['spoofBrd']
-    print "comparing"
-    print (state['runMode'] == modes['spoofBrd'])
-
     if (state['runMode'] == modes['spoofBrd']):
-        print "spoofing"
         ser = 0
     else:
-        print "notspoofing"
         dev = '/dev/tty.usbserial-000013FD'
         baud = 2000000
         tout = 1
         ser = serial.Serial(dev,baud,timeout=tout)
 
-    return ser
+    date = datetime.now().timetuple()
+    date  = "%s_%s_%s" % (date[0],date[1],date[2])
+    filepath = "./anod_%s-%i.txt" % (date,0)
+     
+    i = 0
+    while(os.path.exists(filepath)):
+        filepath = "./anod_%s-%i.txt" % (date,i)
+        i+=1        
+
+    file = open(filepath,'w')
+    return [ser,file]
 
 def chkTime(state):
     """Check the time and end test if the are past their time limits."""
     curTime = time()
     diff= curTime-state['stTime']
-    print diff
+#    print diff
 
     if (diff > state['ch1_time']):
         if (state['ch1_on'] == 1):
@@ -88,29 +96,31 @@ def chkTime(state):
             state['ch2_on'] = 0
             print "Turning off Channel 2"
 
-def getData(state,modes,prot):
+def getData(state,modes,prot,sport):
     """Retrieve data from the serial port"""
     
     if state['runMode'] == modes['spoofBrd']:
         msgIn = prot.get2PCmsg() # get spoofed message
-
     else:
         for a in range(101):
-            y = ser.read(1)
-            print "0x{0:x}".format(ord(y))
-            y = ser.read(1)
-            print "0x{0:x}".format(ord(y))
-            y = ser.read(1)
-            print "0x{0:x}".format(ord(y))
-            print 83
-        ser.close()
+            msgIn = sport.read(3)
+    
+    return msgIn
 
-def formData():
+def formData(unform):
    """format data gotten from getData()"""
+   form = unform
+   return form
+    
     #print "formatting Data"
 def chkErr():
     """Check for errors in data"""
     #print "Checking for errors"
+def wrData(data,file):
+    """Write data to the file"""
+    for d in data:
+        file.write(str(d))
+    file.write("\n")
 def beat():
     """Output heartbeat at a frequency"""
     #print "Output Heartbeat"

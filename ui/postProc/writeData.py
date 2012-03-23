@@ -6,13 +6,16 @@ to a file.
 '''
 from xlrd import open_workbook
 from xlwt import Workbook
-from xlutils.copy import copy
+#from xlutils.copy import copy
 from tempfile import TemporaryFile
-from dataFormat import * 
+#from dataFormat import * 
+from time import *
 
 
 dataFile = 'test_file.xls' #file name to be created/written
 usrFile = 'usr_info.xls'
+
+data = [0,0,0,0,23,0,0,0,0,0,0,0,0,0,0,0]
 
 def createFile(fileCreated,usrInfoFile,numRows):
     """Create an .xls file formated to take data from anod tests.
@@ -88,13 +91,11 @@ def writeData(workingFile,dataList,row):
     #allow for incrementing rows upon sucess
     return (row+1)
 
-createFile(dataFile,usrFile,9)
 
 def testWrData():
     t = tup(0,1,2,3,4,5,6,7,8)
     tList = [t for i in range(65000)]
 
-    from time import *
     curTtime = time() 
     writeData(dataFile,tList,1)
     nextTime = time()

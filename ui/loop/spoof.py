@@ -20,13 +20,13 @@ class commprot():
        self.ch4State = 3
        self.state = (self.ch1State) | (self.ch2State<<2) | (self.ch3State<<4) | (self.ch4State<<6)
 
-       self.ch1vol = 0
-       self.ch2vol = 0
+       self.ch1vol = 7
+       self.ch2vol = 8
        self.ch3vol = 0
        self.ch4vol = 0
 
-       self.ch1cur = 0
-       self.ch2cur = 0
+       self.ch1cur = 20
+       self.ch2cur = 21
        self.ch3cur = 0
        self.ch4cur = 0
 

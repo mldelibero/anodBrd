@@ -5,7 +5,6 @@ This file contains everything needed to inspect the user's testParam_val file fo
 
 from xlrd import open_workbook
 from xlwt import Workbook
-#from xlutils import *
 from tempfile import TemporaryFile
 from collections import namedtuple
 from state import state_entire
@@ -130,8 +129,8 @@ def createState(usrFile):
         except KeyError as e:
             a = 1
 
-    stateP['ch1_time']*=60
-    stateP['ch2_time']*=60
+    stateP['ch1_time'] *= 60
+    stateP['ch2_time'] *= 60
 
     if stateP['ch1_time'] > 0:
         stateP['ch1_on'] = 1
@@ -158,6 +157,15 @@ def createState(usrFile):
             print "Invalid Selection!\n"
 
     bulkState.progState['runMode'] = int(ans)
+
+    #Set sample rate
+    tlen = max(stateP['ch1_time'],stateP['ch2_time'])
+    stateP['sampPer'] = tlen / bulkState.maxSamps
+    print "progConfig"
+    print "maxtime: ", max(stateP['ch1_time'],stateP['ch2_time'])
+    print "tlen: ",tlen
+    print "sampPer: ", stateP['sampPer']
+    
     return stateP
 
 def checkUsrParams(usrFile,state_checkUsr):

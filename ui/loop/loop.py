@@ -22,6 +22,28 @@ def loop(state):
         7. sleep
     """
 
+    class samps():
+        def __init__(self):
+            self.sPer = state['sampPer'] # sample period
+            print "Period: ",self.sPer
+            self.stTime = state['stTime'] # start time
+            self.tlen = max(state['ch1_time'],state['ch2_time'])
+            self.endTime = self.stTime + self.tlen
+
+            self.nxtSamp = time() + state['sampPer']
+            self.samp = False # need to take sample
+            self.sampled = True # just sampled
+
+        def sampNow(self):
+            """Should we take a sample now?"""
+            self.samp = False
+            if time() > self.nxtSamp:
+                    self.samp = True
+                    self.nxtSamp += state['sampPer']
+
+            return self.samp
+
+    sampling = samps();
     runModes = state_entire().runMode
     
     print "\n//---------------------------------------"
@@ -47,10 +69,11 @@ def loop(state):
 
     while (state['ch1_on'] or state['ch2_on']):
         chkTime(state)
-        data = getData(state,runModes,protocol,ser)
-        forData = formData(data)
-        chkErr()
-        wrData(forData,wrFile)
+        if (sampling.sampNow()):
+            data = getData(state,runModes,protocol,ser,)
+            forData = formData(data)
+            chkErr()
+            wrData(forData,wrFile)
         beat()
         sleep()
 
@@ -84,7 +107,6 @@ def chkTime(state):
     """Check the time and end test if the are past their time limits."""
     curTime = time()
     diff= curTime-state['stTime']
-#    print diff
 
     if (diff > state['ch1_time']):
         if (state['ch1_on'] == 1):
@@ -101,6 +123,7 @@ def getData(state,modes,prot,sport):
     
     if state['runMode'] == modes['spoofBrd']:
         msgIn = prot.get2PCmsg() # get spoofed message
+        msgIn.append(time()-state['stTime'])
     else:
         for a in range(101):
             msgIn = sport.read(3)

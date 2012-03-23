@@ -5,31 +5,33 @@ class state_entire:
     """Bulky state class. Extract your desired data format from one of the built-in modules. """
     def __init__(self):
         #Initialize testParam_name
-        date = datetime.now().strftime("%Y-%m-%d")
+        self.date = datetime.now().strftime("%Y-%m-%d")
 
         #{V,mA,min,NA}
-        absLim = {'vol':30,'cur':100,'time':1440,'no':-1}
+        self.absLim = {'vol':30,'cur':100,'time':1440,'no':-1}
         
         self.runMode = {'normal':1, #Normal operation w/ brd attached
                         'spoofBrd':2, #spoofed operation wo brd
                         'calib':3 #calibrating brd
                   }
-
         # key:[printed title, value, printed order, max allowed value]
         self.state = {
-                'usrName':['User Name','Your Name',0,absLim['no']],
-                'testDate':['Test Date',date,      1,absLim['no']],
-                'anodMat':['Anod Material','Ti',   2,absLim['no']],
-                'electro':['Electrolye','H3PO4',   3,absLim['no']],
-                'ch1_vol':['Ch1 Vol(V)',0,         4,absLim['vol']],
-                'ch1_cur':['Ch1 Cur(mA)',1,        5,absLim['cur']],
-                'ch1_time':['Ch1 Time(min)',2,     6,absLim['time']],
-                'ch2_vol':['Ch2 Vol(V)',3,         7,absLim['vol']],
-                'ch2_cur':['Ch2 Cur(mA)',4,        8,absLim['cur']],
-                'ch2_time':['Ch2 Time(min)',2,     9,absLim['time']],
+                'usrName':['User Name','Your Name',0,self.absLim['no']],
+                'testDate':['Test Date',self.date,      1,self.absLim['no']],
+                'anodMat':['Anod Material','Ti',   2,self.absLim['no']],
+                'electro':['Electrolye','H3PO4',   3,self.absLim['no']],
+                'ch1_vol':['Ch1 Vol(V)',0,         4,self.absLim['vol']],
+                'ch1_cur':['Ch1 Cur(mA)',1,        5,self.absLim['cur']],
+                'ch1_time':['Ch1 Time(min)',2,     6,self.absLim['time']],
+                'ch2_vol':['Ch2 Vol(V)',3,         7,self.absLim['vol']],
+                'ch2_cur':['Ch2 Cur(mA)',4,        8,self.absLim['cur']],
+                'ch2_time':['Ch2 Time(min)',2,     9,self.absLim['time']],
                 }
+        self.maxSamps = 60000 # Maximum allowed samples
+        self.sampPer = 1000 # Sample period (runTime(s) / maxSamps
         self.progState = {
                 'runMode':self.runMode['normal'],
+                'sampPer':1000,
                 'stTime':0,
                 'ch1_vol':30,
                 'ch1_cur':100,

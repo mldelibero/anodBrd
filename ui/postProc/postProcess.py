@@ -10,13 +10,17 @@ from xlwt import Workbook
 from xlutils.copy import copy
 from tempfile import TemporaryFile
 
-def postProcess(usrFile,dataFile):
+def postProcess(dataFile):
     """Process all the data taken during the test."""
     print "\n//---------------------------------------"
     print "Starting Post Processing of data"
     print "//---------------------------------------"
-    wrfile = createFile(dataFile)
-    wr2file(wrfile,dataFile)
+    usrInfoFile = testConfig_file
+
+    wrFile = createFile(dataFile,usrInfoFile)
+    wr2file(wrFile,dataFile)
+    #wrfile = createFile(dataFile)
+    #wr2file(wrfile,dataFile)
 
 def createFile(dFileName,setFile):
     """Create a .xls file with the same name as the data file
@@ -54,11 +58,23 @@ def createFile(dFileName,setFile):
     return newName
 
 def wr2file(toFile,frFile):
-    a = 1
+    """format data in frFile and write in toFile"""
+    rb = open_workbook(toFile)
+    rch1 = rb.sheet_by_name('ch1')
+    wr = copy(rb)
+    wch1 = wr.get_sheet(1)
 
+
+    rFile = open(frFile,'r')
+    for row,line in rFile:
+        data = re.findall(r"^\d+,\d+,(\d+),(\d+),(\d+),(\d+),\d+,(\d+\.\d+),",line)[0]
+        wch1.write(row,1,int(data[0]) & 3)
+
+    
 if __name__=='__main__':
     usrInfoFile = testConfig_file
-    datFile = "./anod_2012_3_23-0.txt"
+    datFile = "./anod_2012_3_24-0.txt"
 
-    file = createFile(datFile,usrInfoFile)
+    wrFile = createFile(datFile,usrInfoFile)
+    wr2file(wrFile,datFile)
 

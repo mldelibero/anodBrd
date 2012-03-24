@@ -82,6 +82,9 @@ def loop(state):
     print "\n//---------------------------------------"
     print "Main Loop Done"
     print "//---------------------------------------"
+    
+    return linit[2] # filepath
+
 def loop_init(state,modes):
     if (state['runMode'] == modes['spoofBrd']):
         ser = 0
@@ -101,7 +104,7 @@ def loop_init(state,modes):
         i+=1        
 
     file = open(filepath,'w')
-    return [ser,file]
+    return [ser,file,filepath]
 
 def chkTime(state):
     """Check the time and end test if the are past their time limits."""

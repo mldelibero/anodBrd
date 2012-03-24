@@ -27,7 +27,7 @@ class state_entire:
                 'ch2_cur':['Ch2 Cur(mA)',4,        8,self.absLim['cur']],
                 'ch2_time':['Ch2 Time(min)',2,     9,self.absLim['time']],
                 }
-        self.maxSamps = 60000 # Maximum allowed samples
+        self.maxSamps = 60 # Maximum allowed samples
         self.sampPer = 1000 # Sample period (runTime(s) / maxSamps
         self.progState = {
                 'runMode':self.runMode['normal'],

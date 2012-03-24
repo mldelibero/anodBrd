@@ -2,6 +2,9 @@
 from init.init import init
 from loop.loop import loop
 from init.state import state_entire
+from postProc.postProcess import postProcess
+
+
 #Run the rest of the program if the initialization is sucessful.
 
 print "Anod Board UI program running..."
@@ -10,12 +13,6 @@ state = init()
 if (state == False):
     print "Erorr: main.py did not recieve state from init.py"
 else:
-    loop(state)
+    dFile = loop(state)
 
-
-'''
-if (state != False):
-#    loop(state)
-    postProcess()
-'''
-
+postProcess(dFile)

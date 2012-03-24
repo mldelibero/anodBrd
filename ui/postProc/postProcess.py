@@ -68,17 +68,20 @@ def wr2file(toFile,frFile):
     rFile = open(frFile,'r')
     row = 1
     for line in rFile:
-        data = re.findall(r"^\d+,(\d+),(\d+),(\d+),(\d+),(\d+),\d+,(\d+\.\d+),",line)[0]
+        data = re.findall(r"^\d+,(\d+),(\d+),(\d+),(\d+),(\d+),(\d+),\d+,(\d+\.\d+),",line)[0]
+
 
         wch1.write(row,0,(int(data[0]) & 0x10) >> 4)
         wch1.write(row,1,int(data[1]) & 0x03)
         wch1.write(row,2,int(data[2]))
         wch1.write(row,3,float(data[3]))
+        wch1.write(row,4,float(data[6]))
 
         wch2.write(row,0,(int(data[0]) & 0x10) >> 4)
         wch2.write(row,1,int(data[1]) & 0x03)
         wch2.write(row,2,int(data[4]))
         wch2.write(row,3,float(data[5]))
+        wch2.write(row,4,float(data[6]))
 
         row+=1 
 

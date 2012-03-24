@@ -13,7 +13,6 @@ class commprot():
        self.ch4En = 0
        self.msgSize = 6
        self.chEnSz = (self.ch1En<<4) | (self.ch2En<<5) | self.msgSize
-       print "self: ",hex(self.chEnSz)
 
        self.ch1State = 3
        self.ch2State = 3

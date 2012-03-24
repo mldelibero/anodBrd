@@ -15,7 +15,7 @@ template_file = 'testConfig_template.xls'
 testConfig_file = 'testConfig.xls' # Must be based from template
 
 def create_template(templFile,template):
-    """ Creat a template .xls file for the test's testParam_val output
+    """ Create a template .xls file for the test's testParam_val output
     templFile -> filename to save the template
     template -> ordered list of Name, value to write in the templFile
     """

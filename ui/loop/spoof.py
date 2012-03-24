@@ -7,12 +7,13 @@ class commprot():
    def __init__(self):
        self.startByte = 0x97
 
-       self.ch1En = 0
-       self.ch2En = 0
+       self.ch1En = 1
+       self.ch2En = 1
        self.ch3En = 0
        self.ch4En = 0
        self.msgSize = 6
-       self.chEnSz = 0 | (self.ch1En<<4) | (self.ch2En<<5) | (self.ch3En<<6) | (self.ch4En<<7) | self.msgSize
+       self.chEnSz = (self.ch1En<<4) | (self.ch2En<<5) | self.msgSize
+       print "self: ",hex(self.chEnSz)
 
        self.ch1State = 3
        self.ch2State = 3
@@ -36,6 +37,7 @@ class commprot():
         msg2PC = []
         msg2PC.append(self.startByte)
         msg2PC.append(self.chEnSz)
+        msg2PC.append(self.state)
         msg2PC.append(self.ch1vol)
         msg2PC.append(self.ch1cur)
         msg2PC.append(self.ch2vol)

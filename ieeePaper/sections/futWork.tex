@@ -1,0 +1,9 @@
+\section{Future Work}
+
+Although this circuit functions to within its desired specificaitons, there are several improvements that can be made to achieve tighter control and greater accuracy.
+
+\subsection{Safe Operating Area}
+
+As discussed in Section:\ref{Current and Voltage Measurements} and seen in Fig:\ref{fig:safeOpArea}, the safe operating area of this circutry is less then ideal. Even though the safe operating area contains the most commonly desired output conditions in the discussed experiments (20mA at 30V), it will need to be increased to accomodate higher current outputs.
+
+A proposed way to achieve this increase is to create a software control loop using the existing circuitry. If the microcontroller limits the power dissipated in the last pass transistor while not affecting the DUT, this system can achieve a much greater safe operating area. Since the voltage across and current through the last pass transistor can be known at all times, power can be limited by the circuitry. The voltage at the top of the pass transistor can be estimated to be the compliance voltage set by the circutiry. During circuit operation, the voltage at the bottom of the pass transistor and current through are continuously measured by the microcontroller. Since anodization curves change on the order of $1 V/s$ (30V in 30 seconds), it is feasible to do a software controlled compensation loop. The microcontroller can set a constant current and ramp up the compliance voltage just above the voltage load. This will minimize the power dissipated in the last pass transistor and greatly increase the safe operating area of the circuitry.

@@ -1,13 +1,31 @@
-\input{metadata/ieeeTemplate.tex}
+\documentclass[conference]{IEEEtran}
+\input{metadata/packages}
+\input{metadata/authordata}
 
 \begin{document}
 \title{\gettitle}
 \author{\getauthor}
+%\thanks{This work was supported by ARPA-E under grant \#DE-AR0000116.}
+
 
 \maketitle
 
 \input{sections/abstract.tex}
-\IEEEpeerreviewmaketitle
+%\IEEEpeerreviewmaketitle
+%\numberwithin{equation}{section}
+%\numberwithin{figure}{section}
 
 \input{sections/introduction.tex}
+\input{sections/design.tex}
+\input{sections/experProc.tex}
+\input{sections/experRes.tex}
+\input{sections/acks.tex}
+
+\ifCLASSOPTIONcaptionsoff
+\newpage
+\fi
+
+\bibliographystyle{abbrv}
+\bibliography{exbib}
+
 \end{document}

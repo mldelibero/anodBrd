@@ -21,4 +21,7 @@ all:
 	open $(file).pdf
 
 clean:
-	rm -rf *.aux *.log *.toc
+	rm -rf *.aux *.log *.toc *.bbl *.blg
+
+sweep:
+	rm -rf *~

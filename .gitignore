@@ -9,5 +9,7 @@ __init__.py
 *.aux
 *.blg
 *.bst
+*.bbl
+*.log
 
 testConfig_template.xls

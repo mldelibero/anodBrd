@@ -1,4 +1,4 @@
-\documentclass[conference]{IEEEtran}
+\documentclass[conference]{./metadata/IEEEtran}
 \input{metadata/packages}
 \input{metadata/authordata}
 
@@ -7,11 +7,10 @@
 \author{\getauthor}
 %\thanks{This work was supported by ARPA-E under grant \#DE-AR0000116.}
 
-
 \maketitle
 
 \input{sections/abstract.tex}
-%\IEEEpeerreviewmaketitle
+\IEEEpeerreviewmaketitle
 %\numberwithin{equation}{section}
 %\numberwithin{figure}{section}
 
@@ -25,7 +24,7 @@
 \newpage
 \fi
 
-\bibliographystyle{abbrv}
+\bibliographystyle{IEEEtran}
 \bibliography{bib}
 
 \end{document}

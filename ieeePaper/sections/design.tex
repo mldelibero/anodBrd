@@ -1,4 +1,3 @@
-
 \begin{figure}[here]
 \centering
 \includegraphics[width=3.5in]{blockDiagram}
@@ -8,7 +7,7 @@
 
 \subsection{Computer Control and Data Acquisition}
 
-The user sets the test parameters of current, voltage compliance, and testing time. The anodization is then controlled by a set of Python scripts, which appropriately configure the hardware and control the data logging. Voltage and current measurements are sampled at a constant, high rate and all data is recorded. However, once the electrode has reached the forming voltage and the (leakage) current is slowly decreasing over time the data measurements are subsampled, and only a fraction of the sampled data is preserved.  (say more on this)
+The user sets the test parameters of current, voltage compliance, and testing time. The anodization is then controlled by a set of Python scripts, which appropriately configure the hardware and control the data logging. Voltage and current measurements are sampled at a constant, high rate and all data is recorded. However, once the electrode has reached the forming voltage and the (leakage) current is slowly decreasing over time the data measurements are subsampled, and only a fraction of the sampled data is preserved.
 
 \subsection{Current Source}
 
@@ -52,7 +51,7 @@ The safe operating area (Fig.  ~\ref{fig:safeOpArea}) is smaller than the desire
 I_{out} = P_{rating} / V_{comp}
 \end{equation}
 
-The current source operates by controlling the gate voltage of U18Z1 in Fig. ~\ref{fig:currentMirror}) ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of Fig. ~\ref{fig:currentMirror} is limited by the Gain Bandwidth Product of the U4X1B (1.8Mhz). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See DUT section).
+The current source operates by controlling the gate voltage of U18Z1 in Fig. ~\ref{fig:currentMirror}) ensure a constant current as the voltage on the DUT changes. Ideally, the source would be able to respond to a change in load impedance instantaneous to keep the current output constant. The real current source of Fig. ~\ref{fig:currentMirror} is limited by the Gain Bandwidth Product of the U4X1B (1.8Mhz). This limitation is of little concern, as the op-amp is still much faster then the fastest load change expected (See Section:\ref{DUT})
 
 The ideal current source has the ability to output any desired current over its range with infinite precision. The current source in this design is limited in this regard by the discretization error of setting the current. Referring to (Fig. ~\ref{fig:currentMirror}) the signal $i_{set4}$ is used as a control signal to set the reference current in the device. This signal is controlled by a Microchip MCP4812 10-bit DAC. A first approximation of the discretization uncertainty in selecting DAC outputs can be found by:
 
@@ -67,6 +66,7 @@ Which yields an uncertainty in the current output of +/- 0.5mA. Calibration can 
 The protection diode, U39, in (Fig. ~\ref{fig:currentMirror}) has the effect of increasing the voltage compliance as the current drops off after anodization. Looking at a standard diode curve, the voltage drop across the diode is roughly a constant 0.7V for high currents and exponentially diminishes towards zero as the current decreases. The tests are designed to not only anodize, but also continue to measure the long-term leakage current afterwards. This means that the current draw will decrease to the nA range, causing the effective voltage compliance to increase to about a diode drop above its anodization level. This affect will need to be considered during the analysis of the anodization data.
 
 \subsection{DUT}
+\label{DUT}
 
 The device under test is typically a titanium anode to be anodized or a titanium capacitor. The device is able to operate with resistive loads and any capacitive loads (with capacitance large enough for the system to be able to respond.
 
@@ -112,5 +112,5 @@ The DACs inject digitization errors into the measurement signals. They are able 
 \end{tabular}
 \end{table}
 
-Once the data is collected by the microcontroller, it is sent to a PC via USB for further analysis. The data is sampled by the ADCs at a rate of baud and transferred to the PC at a rate of 2Mbaud. This allows for maximum flexibility on the PC side, where any data coming in at a rate greater than what is desired can simply be discarded.
+Once the data is collected by the microcontroller, it is sent to a PC via USB for further analysis. The data is sampled by the ADCs at a configureable baud rate and transferred to the PC at a rate of 2Mbaud. This allows for maximum flexibility on the PC side, where any data coming in at a rate greater than what is desired can simply be discarded.
 

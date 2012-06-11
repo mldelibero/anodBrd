@@ -1,5 +1,5 @@
 #! /usr/bin/env python
-from state import state_entire
+from state      import state_entire
 from progConfig import checkUsrParams
 from progConfig import testConfig_file
 from progConfig import checkUsrParams
